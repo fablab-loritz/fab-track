@@ -1,58 +1,58 @@
--- Table des types de matière (Filament, Bois, Papier, etc.)
+-- Table des types de matière
 CREATE TABLE material_types (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+) ENGINE=InnoDB;
 
--- Table des matières précises (PLA blanc, MDF 3mm, etc.)
+-- Table des matières
 CREATE TABLE materials (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    material_type_id INTEGER NOT NULL,
-    unit TEXT NOT NULL, -- g, m², feuille, etc.
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    material_type_id INT NOT NULL,
+    unit VARCHAR(20) NOT NULL,
     FOREIGN KEY (material_type_id) REFERENCES material_types(id)
-);
+) ENGINE=InnoDB;
 
--- Table des machines (Ender 3, Raise 3D, Laser, etc.)
+-- Table des machines
 CREATE TABLE machines (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    category TEXT NOT NULL -- Impression 3D, Découpe Laser, etc.
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL
+) ENGINE=InnoDB;
 
--- Table des classes (importée de Pronote)
+-- Table des classes
 CREATE TABLE classes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE -- ex: 1STI2D1
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+) ENGINE=InnoDB;
 
--- Table des professeurs (importée de Pronote)
+-- Table des professeurs
 CREATE TABLE professors (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    full_name TEXT NOT NULL -- ex: "Jean Dupont"
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
 
--- Table des responsables de réalisation (fabmanager ou élève)
+-- Table des responsables de réalisation
 CREATE TABLE responsibles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL -- ex: "Élève", "Julien (Fabmanager)"
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
 
 -- Table des usages (registre de consommation)
 CREATE TABLE usages (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     datetime DATETIME NOT NULL,
-    class_id INTEGER NOT NULL,
-    project TEXT,
-    professor_id INTEGER,
-    responsible_id INTEGER,
-    material_id INTEGER NOT NULL,
-    machine_id INTEGER NOT NULL,
-    quantity REAL NOT NULL,
+    class_id INT NOT NULL,
+    project VARCHAR(255),
+    professor_id INT,
+    responsible_id INT,
+    material_id INT NOT NULL,
+    machine_id INT NOT NULL,
+    quantity DECIMAL(10, 2) NOT NULL,
     notes TEXT,
     FOREIGN KEY (class_id) REFERENCES classes(id),
     FOREIGN KEY (professor_id) REFERENCES professors(id),
     FOREIGN KEY (responsible_id) REFERENCES responsibles(id),
     FOREIGN KEY (material_id) REFERENCES materials(id),
     FOREIGN KEY (machine_id) REFERENCES machines(id)
-);
+) ENGINE=InnoDB;
