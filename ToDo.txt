@@ -1,0 +1,8 @@
+Les éléments a ajouter/modifier :
+ -modification possible des entrées sans devoir passer par mysql mais par le tableau
+-tableau dans un autre fichier php pour que tout le monde puisse le consulter sans avoir accès à la modif/entrée de données.
+-ajout d’autres champs de textes avant le bouton valider : nom du prof référant, nom de l’élève… et ajout des colonnes dans le tableau.
+-suppression colonne id sur le tableau
+-amélioration du css
+-possibilité d’ajouter un inventaire : les ressources consommées entrée sur la page se soustrairont du stock dans une table stock sur mysql et potentiellement sur un tableau dans le même style que le précédent.
+-Importer les bases de données depuis Pronote pour les profs et éventuellement les élèves 

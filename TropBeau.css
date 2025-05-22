@@ -1,0 +1,59 @@
+body{
+background-color : #82a3ae; 
+}
+
+h1 {
+text-align : center;
+font-family : Arial, "times new roman ", Verdana,serif;
+color : red; /* # FF0000 */
+}
+h2 {
+text-align : center;
+font-family : Arial, "times new roman ", Verdana,serif;
+color : red;
+}
+p{
+text-align : center;
+font-family : Arial, "times new roman ", Verdana,serif;
+color : black;
+}
+strong {
+text-align : left;
+font-family : Arial, "times new roman ", Verdana,serif;
+color : green; /* # FF0000 */
+}
+table {
+border-collapse : collapse;
+border : solid 4px
+
+}
+table {
+	/*width : 75%; 75 pourcent de la largeur de la page*/
+margin : auto;
+}
+tr{ 
+border : solid 2px;
+font-family : Arial;
+color : red;
+background-color : FFA500
+}
+td{ 
+border : solid 2px;
+font-family : Arial;
+color : blue;
+}
+span {color : green;}
+th{ 
+border : solid 2px;
+font-family : Arial;
+color : red;
+background-color : FFA500
+}
+span{ 
+border : solid 2px;
+font-family : Arial;
+color : green;
+}
+img{ 
+max-width : 200px;
+}
