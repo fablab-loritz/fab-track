@@ -29,7 +29,8 @@ CREATE TABLE classes (
 -- Table des professeurs
 CREATE TABLE professors (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL
+    last_name VARCHAR(100) NOT NULL,
+    first_name VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB;
 
 -- Table des responsables de réalisation
