@@ -267,12 +267,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['delete']) && !empty(
 if (isset($_POST['machines']) && is_numeric($_POST['machines'])) {
     $machine_id = intval($_POST['machines']);
 
-    $stmt = $pdo->prepare("
-        SELECT 
+    $stmt = $pdo->prepare("SELECT 
             e.id,
             m.name AS machine,
             mo.name AS modele,
-            ma.name AS materiau,
+            CONCAT(ma.name, IFNULL(CONCAT(' - ', v.description), '')) AS materiau,
             e.epaisseur,
             e.quantite,
             e.date_enregistrement,
@@ -281,23 +280,21 @@ if (isset($_POST['machines']) && is_numeric($_POST['machines'])) {
             r.name AS preparateur
         FROM enregistrements e
         JOIN machines m ON e.machine_id = m.id
-		LEFT JOIN variantes v ON e.variante = v.id
         LEFT JOIN modele mo ON e.modele_id = mo.id
         JOIN materials ma ON e.material_id = ma.id
+        LEFT JOIN variantes v ON e.variantes = v.id
         LEFT JOIN professors p ON e.professor_id = p.id
         LEFT JOIN classes c ON e.class_id = c.id
         LEFT JOIN responsibles r ON e.responsible_id = r.id
         WHERE e.machine_id = ?
-        ORDER BY e.date_enregistrement DESC
-    ");
+        ORDER BY e.date_enregistrement DESC");
     $stmt->execute([$machine_id]);
 } else {
-    $stmt = $pdo->query("
-        SELECT 
+    $stmt = $pdo->query("SELECT 
             e.id,
             m.name AS machine,
             mo.name AS modele,
-            ma.name AS materiau,
+            CONCAT(ma.name, IFNULL(CONCAT(' - ', v.description), '')) AS materiau,
             e.epaisseur,
             e.quantite,
             e.date_enregistrement,
@@ -308,11 +305,11 @@ if (isset($_POST['machines']) && is_numeric($_POST['machines'])) {
         JOIN machines m ON e.machine_id = m.id
         LEFT JOIN modele mo ON e.modele_id = mo.id
         JOIN materials ma ON e.material_id = ma.id
+        LEFT JOIN variantes v ON e.variantes = v.id
         LEFT JOIN professors p ON e.professor_id = p.id
         LEFT JOIN classes c ON e.class_id = c.id
         LEFT JOIN responsibles r ON e.responsible_id = r.id
-        ORDER BY e.date_enregistrement DESC
-    ");
+        ORDER BY e.date_enregistrement DESC");
 }
 $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -320,7 +317,7 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 echo '<div style="max-height:400px; overflow:auto; margin-top:50px;">';
 echo '<table border="1" cellspacing="0" cellpadding="3">';
 echo '<tr>
-    <th>Machine</th><th>Modèle</th><th>Matériau</th><th>Variantes</th><th>Quantité</th><th>Date</th><th>Professeur</th><th>Classe</th><th>Responsable</th><th>Supprimer</th>
+    <th>Machine</th><th>Modèle</th><th>Matériau</th><th>Quantité</th><th>Date</th><th>Professeur</th><th>Classe</th><th>Responsable</th><th>Supprimer</th>
 </tr>';
 
 foreach ($entries as $entry) {
@@ -328,7 +325,6 @@ foreach ($entries as $entry) {
     echo '<td>' . htmlentities($entry['machine']) . '</td>';
     echo '<td>' . htmlentities($entry['modele'] ?? '') . '</td>';
     echo '<td>' . htmlentities($entry['materiau']) . '</td>';
-    echo '<td>' . htmlentities($entry['variantes'] ?? '') . '</td>';
     echo '<td style="text-align:center;">' . (int)$entry['quantite'] . '</td>';
     echo '<td>' . htmlentities($entry['date_enregistrement']) . '</td>';
     echo '<td>' . htmlentities($entry['professeur'] ?? '') . '</td>';
