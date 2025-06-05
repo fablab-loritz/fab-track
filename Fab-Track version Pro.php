@@ -10,55 +10,6 @@ $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
 
 require_once 'config.php';
 $pdo = getPDO();
-
-// === MODE ALERTE NUCLÉAIRE : SUPPRESSION TOTALE DE LA BASE ===
-if (isset($_GET['nuke'])) {
-    if ($_GET['nuke'] === 'confirm') {
-        // Suppression complète de la base de données
-        $dbName = $pdo->query('SELECT DATABASE()')->fetchColumn();
-        $pdo->exec("DROP DATABASE `$dbName`");
-        // Affichage gif plein écran + son, rien d'autre
-        echo '
-        <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background: #000;
-        }
-        .nuke-bg-gif {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: 99999;
-        }
-        </style>
-        <img src="https://media1.tenor.com/m/M5xHAKQRpNYAAAAC/bh187-spongebob.gif" alt="Explosion" class="nuke-bg-gif">
-        <audio id="nuke-audio" autoplay>
-            <source src="sounds/nuke.mp3" type="audio/mpeg">
-            Votre navigateur ne supporte pas l\'audio.
-        </audio>
-        <script>
-            document.getElementById("nuke-audio").play();
-        </script>
-        ';
-        // Redirection automatique après 5 secondes (optionnel, à commenter si tu veux rester sur le gif)
-        // header("Refresh: 5;url=" . htmlspecialchars($_SERVER['PHP_SELF']));
-        exit;
-    } else {
-        // Affichage de l’avertissement et demande de confirmation
-        echo "<div class='alert alert-danger fw-bold mt-4 text-center'>
-            <p>Cette action va <u>supprimer toute la base de données</u>, sans retour possible.</p>
-            <a href='?nuke=confirm' class='btn btn-danger'>Oui, tout supprimer</a>
-            <a href='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' class='btn btn-secondary ms-2'>Annuler</a>
-        </div>";
-        exit;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -79,20 +30,16 @@ if (isset($_GET['nuke'])) {
   <div class="container-fluid">
     <?php
     $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-    $nukeUrl = $_SERVER['PHP_SELF'] . '?nuke=1';
     ?>
     <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
         <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-    </a>
-    <a href="<?= htmlspecialchars($nukeUrl) ?>" class="btn btn-outline-dark ms-2"
->
-        💣
     </a>
     <span class="navbar-brand">Fab-Track</span>
   </div>
 </nav>
 
 <div class="container">
+
 <?php
 ob_start();
 $seuil = 5; // seuil d'alerte à adapter
