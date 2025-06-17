@@ -9,6 +9,7 @@ try {
     die('Erreur de connexion : ' . $e->getMessage());
 }
 
+<<<<<<< HEAD
 // Gestion du mode sombre via cookie
 if (isset($_GET['darkmode'])) {
     setcookie('darkmode', $_GET['darkmode'], time() + 365*24*3600, "/");
@@ -16,6 +17,8 @@ if (isset($_GET['darkmode'])) {
 }
 $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
 
+=======
+>>>>>>> 4080bcbc4dcabe73c546e8577f6c9f0779f8dffe
 // Mise à jour du stock si formulaire soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_stock'])) {
     $id = $_POST['id'];
@@ -27,10 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_stock'])) {
         ':id' => $id
     ]);
 
+<<<<<<< HEAD
+=======
+    // Redirection pour éviter le repost et forcer rechargement des données
+>>>>>>> 4080bcbc4dcabe73c546e8577f6c9f0779f8dffe
     header('Location: ' . $_SERVER['PHP_SELF'] . '?refresh=' . time());
     exit;
 }
 
+<<<<<<< HEAD
 $sql = "SELECT SQL_NO_CACHE id, name, unit, stock FROM materials";
 $stmt = $bdd->query($sql);
 
@@ -133,3 +141,45 @@ function getMaterialImage($name) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+=======
+// Récupération des matériaux avec SQL_NO_CACHE pour éviter cache MySQL
+$sql = "SELECT SQL_NO_CACHE id, name, unit, stock FROM materials";
+$stmt = $bdd->query($sql);
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion du Stock</title>
+    <link rel="stylesheet" href="TropBeau.css">
+</head>
+<body>
+    <h2>Gestion du Stock</h2>
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Unité</th>
+            <th>Stock</th>
+            <th>Action</th>
+        </tr>
+        <?php while ($row = $stmt->fetch()) : ?>
+        <tr>
+            <td><?= htmlspecialchars($row['name']) ?></td>
+            <td><?= htmlspecialchars($row['unit']) ?></td>
+            <td>
+                <form method="POST">
+                    <input type="number" name="stock" value="<?= htmlspecialchars($row['stock']) ?>" required>
+                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+            </td>
+            <td>
+                    <button type="submit" name="update_stock">Mettre à jour</button>
+                </form>
+            </td>
+        </tr>
+        <?php endwhile; ?>
+    </table>
+</body>
+</html>
+>>>>>>> 4080bcbc4dcabe73c546e8577f6c9f0779f8dffe
