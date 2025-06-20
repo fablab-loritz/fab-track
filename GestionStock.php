@@ -1,15 +1,6 @@
 <?php
-include 'dbc.php';
+include 'config.php';
 
-try {
-    $bdd = new PDO("mysql:host=$host_bdd;port=$port_bdd;dbname=$base_bdd", $user_bdd, $pass_bdd);
-    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (Exception $e) {
-    die('Erreur de connexion : ' . $e->getMessage());
-}
-
-<<<<<<< HEAD
 // Gestion du mode sombre via cookie
 if (isset($_GET['darkmode'])) {
     setcookie('darkmode', $_GET['darkmode'], time() + 365*24*3600, "/");
@@ -17,169 +8,88 @@ if (isset($_GET['darkmode'])) {
 }
 $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
 
-=======
->>>>>>> 4080bcbc4dcabe73c546e8577f6c9f0779f8dffe
+try {
+    $bdd = getPDO();
+    $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    die('Erreur de connexion : ' . $e->getMessage());
+}
+
 // Mise à jour du stock si formulaire soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_stock'])) {
-    $id = $_POST['id'];
-    $new_stock = $_POST['stock'];
-
-    $update = $bdd->prepare("UPDATE materials SET stock = :stock WHERE id = :id");
-    $update->execute([
-        ':stock' => $new_stock,
-        ':id' => $id
-    ]);
-
-<<<<<<< HEAD
-=======
-    // Redirection pour éviter le repost et forcer rechargement des données
->>>>>>> 4080bcbc4dcabe73c546e8577f6c9f0779f8dffe
-    header('Location: ' . $_SERVER['PHP_SELF'] . '?refresh=' . time());
-    exit;
-}
-
-<<<<<<< HEAD
-$sql = "SELECT SQL_NO_CACHE id, name, unit, stock FROM materials";
-$stmt = $bdd->query($sql);
-
-// Fonction pour trouver le fichier image correspondant à un nom de matériau
-
-function getMaterialImage($name) {
-    $imgDir = 'images/';
-    $map = [
-        'Polystyrène extrudé' => 'PolystyreneExtrude.jpg',
-        'PLA' => 'pla.png',
-        'ABS' => 'abs.png',
-        'PETG' => 'petg.png',
-        'MDF' => 'mdf.jpg',
-        'Plexy' => 'plexi.png',
-        'Carton' => 'carton.avif',
-        'Mousse' => 'mousse.jpg',
-        'Alu' => 'alu.jpg',
-        'Papier A4' => 'a4couleur.jpg',
-        'Papier A4 noir et blanc' => 'A4.jpg',
-        'Papier A3' => 'a3couleur.jpg',
-        'Papier A3 noir et blanc' => 'A3.png',
-        'Papier A2' => 'a2couleur.jpg',
-        'Papier A2 noir et blanc' => 'A2.webp',
-        'Papier A1' => 'a1_couleur.jpg',
-        'Papier A1 noir et blanc' => 'A1.webp',
-    ];
-    
-    // Normaliser la casse et les espaces pour correspondre plus facilement
-    $normalized_name = strtolower(trim($name));
-    foreach ($map as $key => $filename) {
-        if (strtolower($key) === $normalized_name && file_exists($imgDir . $filename)) {
-            return $imgDir . $filename;
-        }
+    foreach ($_POST['stock'] as $id => $value) {
+        $stmt = $bdd->prepare("UPDATE materials SET stock = ? WHERE id = ?");
+        $stmt->execute([intval($value), intval($id)]);
     }
-    
-    return null;
 }
 
+// Récupération des matériaux avec la colonne image
+$sql = "SELECT SQL_NO_CACHE id, name, unit, stock, image FROM materials";
+$stmt = $bdd->query($sql);
+$materials = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
     <title>Gestion du Stock</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="C:/Users/mat88/Downloads/virtualhost/css/custom.css" />
 </head>
-<body<?php if ($darkmode) echo ' class="dark-mode"'; ?>>
-    <div class="container mt-5">
-        <h2 class="mb-4 text-primary fw-bold">Gestion du Stock</h2>
-        <div class="d-flex justify-content-end mb-2">
-            <?php
-                $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-                $toggleLabel = $darkmode ? 'Mode normal' : 'Mode sombre';
-                $toggleClass = $darkmode ? 'btn-warning' : 'btn-danger';
-            ?>
-            <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn <?= $toggleClass ?> fw-semibold">
-                <?= $toggleLabel ?>
-            </a>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nom</th>
-                        <th>Unité</th>
-                        <th>Stock</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php while ($row = $stmt->fetch()) : ?>
-                    <tr>
-                        <td>
-                            <?php
-                                $img = getMaterialImage($row['name']);
-                                if ($img) {
-                                    echo '<img src="' . htmlspecialchars($img) . '" alt="" style="height:32px;vertical-align:middle;margin-right:8px;">';
-                                }
-                                echo htmlspecialchars($row['name']);
-                            ?>
-                        </td>
-                        <td><?= htmlspecialchars($row['unit']) ?></td>
-                        <td>
-                            <form method="POST" class="d-flex align-items-center mb-0">
-                                <input type="number" name="stock" value="<?= htmlspecialchars($row['stock']) ?>" required class="form-control me-2" style="max-width:120px;">
-                                <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                        </td>
-                        <td>
-                                <button type="submit" name="update_stock" class="btn btn-primary">Mettre à jour</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="icon" type="image/x-icon" href="icones/logo-fab-track.ico">
+<body
+<?php
+    $classes = [];
+    if ($darkmode) $classes[] = 'dark-mode';
+    if ($classes) echo ' class="' . implode(' ', $classes) . '"';
+?>>
+<div class="logo-fabtrack-float">
+    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
+    <img src="icones/Logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
+</div>
+<nav class="navbar navbar-light bg-white shadow-sm mb-4">
+  <div class="container-fluid">
+    <?php
+    $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
+    ?>
+    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
+        <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+    </a>
+    <span class="navbar-brand">Gestion du Stock</span>
+  </div>
+</nav>
+<div class="container">
+    <h4 class="mb-4 text-primary fw-bold text-center">Gestion du Stock</h4>
+    <form method="post">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Nom</th>
+                    <th>Unité</th>
+                    <th>Stock</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($materials as $mat): ?>
+                <tr>
+                    <td>
+                        <img src="icones/<?= htmlentities($mat['image'] ?: 'default.png') ?>" alt="" width="40">
+                    </td>
+                    <td><?= htmlentities($mat['name']) ?></td>
+                    <td><?= htmlentities($mat['unit']) ?></td>
+                    <td><?= (int)$mat['stock'] ?></td>
+                    <td>
+                        <input type="number" name="stock[<?= $mat['id'] ?>]" value="<?= (int)$mat['stock'] ?>" class="form-control" style="width:100px;">
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <button type="submit" name="update_stock" class="btn btn-success">Mettre à jour</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-=======
-// Récupération des matériaux avec SQL_NO_CACHE pour éviter cache MySQL
-$sql = "SELECT SQL_NO_CACHE id, name, unit, stock FROM materials";
-$stmt = $bdd->query($sql);
-
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Gestion du Stock</title>
-    <link rel="stylesheet" href="TropBeau.css">
-</head>
-<body>
-    <h2>Gestion du Stock</h2>
-    <table>
-        <tr>
-            <th>Nom</th>
-            <th>Unité</th>
-            <th>Stock</th>
-            <th>Action</th>
-        </tr>
-        <?php while ($row = $stmt->fetch()) : ?>
-        <tr>
-            <td><?= htmlspecialchars($row['name']) ?></td>
-            <td><?= htmlspecialchars($row['unit']) ?></td>
-            <td>
-                <form method="POST">
-                    <input type="number" name="stock" value="<?= htmlspecialchars($row['stock']) ?>" required>
-                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-            </td>
-            <td>
-                    <button type="submit" name="update_stock">Mettre à jour</button>
-                </form>
-            </td>
-        </tr>
-        <?php endwhile; ?>
-    </table>
-</body>
-</html>
->>>>>>> 4080bcbc4dcabe73c546e8577f6c9f0779f8dffe

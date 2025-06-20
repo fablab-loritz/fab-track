@@ -15,8 +15,9 @@ h1, h2, h3 {
     letter-spacing: 1px;
 }
 .titre-entrees {
-    color: #2CA1DB !important; /* Bleu en mode normal */
+    color: #2CA1DB !important;
 }
+
 /* Table */
 .table {
     border-radius: 8px;
@@ -129,20 +130,6 @@ form.border.p-4.rounded.shadow-sm.bg-white {
     margin-right: auto;
 }
 
-/* Badges et tags */
-.badge-primary {
-    background-color: #2CA1DB;
-}
-.badge-warning {
-    background-color: #DBA42C;
-}
-.badge-danger {
-    background-color: #DB6F2C;
-}
-.badge-dark {
-    background-color: #5C4B40;
-}
-
 /* Textes colorés */
 .text-primary {
     color: #2CA1DB !important;
@@ -160,33 +147,11 @@ form.border.p-4.rounded.shadow-sm.bg-white {
     color: #40535C !important;
 }
 
-/* Bordures personnalisées */
-.border-dark-custom {
-    border: 1px solid #5C5340;
-}
-
-/* Cartes */
-.card {
-    border: 1px solid #DBA42C;
-    border-radius: 8px;
-}
-.card-header {
-    background-color: #2CA1DB;
-    color: white;
-    font-weight: 600;
-    border-radius: 8px 8px 0 0;
-}
-.card-body {
-    background-color: #fff;
-    color: #333;
-    border-radius: 0 0 8px 8px;
-}
-
-/* Tableau des responsables en haut à droite */
+/* Tableau des responsables en haut à gauche */
 #table-responsables {
-    position: fixed;
-    top: 90px;
-    right: 20px;
+    position: absolute;
+    top: 64px; /* adapte à la hauteur de la navbar */
+    left: 30px;
     width: 300px;
     max-height: 340px;
     overflow-y: auto;
@@ -206,20 +171,18 @@ form.border.p-4.rounded.shadow-sm.bg-white {
 
 /* Décalage du contenu principal pour ne pas être sous le tableau des responsables */
 .container {
-    margin-right: 340px;
     max-width: 900px;
 }
 
 /* Navbar */
 .navbar-brand {
     font-weight: bold;
-    color: #2CA1DB !important; /* Bleu Fab-Track */
+    color: #2CA1DB !important;
     letter-spacing: 1px;
     font-size: 1.5rem;
     margin-right: 70px;
 }
 .navbar {
-    /* border-bottom: 2px solid #2CA1DB; */ /* Ligne bleue supprimée */
     background: #fff;
     margin-bottom: 2rem;
     transition: background 0.2s, color 0.2s;
@@ -230,30 +193,30 @@ form.border.p-4.rounded.shadow-sm.bg-white {
     display: none !important;
 }
 
-/* Responsive : corrige la media query mal fermée */
+/* Responsive */
 @media (max-width: 900px) {
-    #table-responsables, .table-container {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    #table-responsables {
         position: static;
         width: 100%;
         max-width: 100%;
-        margin-bottom: 1.5rem;
-        box-shadow: none;
-    }
-    .container {
-        margin-right: 0;
-        max-width: 100%;
+        margin-bottom: 20px;
+        top: auto;
+        right: auto;
     }
 }
 
-/*MODE SOMBRE PERSONNALISÉ*/
+/* MODE SOMBRE PERSONNALISÉ */
 body.dark-mode {
     background-color: #23272f !important;
-    color: #DBA42C !important; /* Couleur de texte plus douce */
+    color: #DBA42C !important;
 }
 body.dark-mode .titre-entrees {
     color: #DBA42C !important;
 }
-/* Tableaux (haut et bas) */
 body.dark-mode .table,
 body.dark-mode .table-bordered,
 body.dark-mode .table-striped,
@@ -272,8 +235,6 @@ body.dark-mode .table thead th {
 body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
     background-color: #24282e !important;
 }
-
-/* Tableau des responsables */
 body.dark-mode #table-responsables {
     background-color: #181a1b !important;
     border-color: #444 !important;
@@ -293,8 +254,6 @@ body.dark-mode #table-responsables thead {
 body.dark-mode #table-responsables tr:nth-child(odd) {
     background-color: #24282e !important;
 }
-
-/* Harmonisation des couleurs (orange bouton supprimer) */
 body.dark-mode .text-primary,
 body.dark-mode .text-warning,
 body.dark-mode .text-danger,
@@ -303,10 +262,6 @@ body.dark-mode .navbar-brand,
 body.dark-mode h1, 
 body.dark-mode h2, 
 body.dark-mode h3,
-body.dark-mode .badge-primary,
-body.dark-mode .badge-warning,
-body.dark-mode .badge-danger,
-body.dark-mode .badge-dark,
 body.dark-mode .btn-outline-primary,
 body.dark-mode .btn-primary,
 body.dark-mode .btn-warning,
@@ -319,10 +274,7 @@ body.dark-mode .form-label {
     border-color: #DB6F2C !important;
     background-color: transparent !important;
 }
-
-/* Pour les badges et boutons, garder le fond orange */
-body.dark-mode .btn-danger,
-body.dark-mode .badge-danger {
+body.dark-mode .btn-danger {
     background-color: #DB6F2C !important;
     color: #fff !important;
     border-color: #DB6F2C !important;
@@ -331,8 +283,6 @@ body.dark-mode .btn-danger:hover {
     background-color: #C75F22 !important;
     border-color: #C75F22 !important;
 }
-
-/* Inputs et formulaires */
 body.dark-mode .form-control,
 body.dark-mode .form-select,
 body.dark-mode form.border.p-4.rounded.shadow-sm.bg-white {
@@ -340,170 +290,164 @@ body.dark-mode form.border.p-4.rounded.shadow-sm.bg-white {
     color: #bfc4c9 !important;
     border-color: #444 !important;
 }
-
-/* Navbar et cartes */
 body.dark-mode .navbar,
-body.dark-mode .card,
 body.dark-mode .bg-white {
     background-color: #23272f !important;
     color: #bfc4c9 !important;
     border-color: #444 !important;
 }
 
-/* Bordures personnalisées */
-body.dark-mode .border-dark-custom {
-    border-color: #444 !important;
-}
-
-/*Changement pour adaptation mobile : mode téléphone portrait */
+/* Changement pour adaptation mobile : mode téléphone portrait */
 @media (orientation: portrait) {
-    /* Agrandir les tableaux */
-    .table, .table th, .table td {
-        font-size: 1.25rem;
-        padding: 1.2rem;
-    }
-
-    /* Agrandir les boutons */
-    .btn, .btn-primary, .btn-danger, .btn-warning, .btn-dark {
-        font-size: 1.2rem;
-        padding: 1rem 2rem;
-        border-radius: 10px;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    /* Agrandir les champs de formulaire */
-    .form-control, .form-select {
-        font-size: 1.15rem;
-        padding: 1rem 1.2rem;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    /* Titres plus gros et centrés */
-    h1, h2, h3 {
-        font-size: 2.2rem;
-        text-align: center;
-    }
-
-    /* Espacement plus important */
-    .container, form.border.p-4.rounded.shadow-sm.bg-white {
-        padding: 2.5rem 1rem !important;
-        margin: 0 !important;
+    .container {
         max-width: 100%;
+        padding: 0 10px;
     }
-
-    /* Table des responsables en haut, pleine largeur */
     #table-responsables {
         position: static;
         width: 100%;
         max-width: 100%;
-        margin-bottom: 1.5rem;
-        box-shadow: none;
-        right: auto;
+        margin-bottom: 20px;
         top: auto;
-    }
-
-    /* Contenu principal sans marge à droite */
-    .container {
-        margin-right: 0;
-        max-width: 100%;
-    }
-
-    /* Tableaux en mode carte pour mobile */
-    .table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-    }
-    .table thead {
-        display: none;
-    }
-    .table tbody, .table tr {
-        display: block;
-        width: 100%;
-    }
-    .table td {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.8rem 0.5rem;
-        border-bottom: 1px solid #444;
-        font-size: 1.1rem;
-    }
-    .table td:before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #2CA1DB;
-        margin-right: 1rem;
-        flex-shrink: 0;
+        right: auto;
     }
 }
 
-/* Alerte stock bas : bleu en normal, orange en sombre */
+/* Alerte stock bas */
 .alert-stock {
-    background-color: #e7f3fa !important;
-    color: #2CA1DB !important;
-    border-color: #2CA1DB !important;
+    background-color: #eaf6fb;
+    color: #2CA1DB;
+    border: 1px solid #2CA1DB;
 }
 body.dark-mode .alert-stock {
-    background-color: #2d2117 !important;
+    background-color: #2d2d2d;
+    color: #DBA42C;
+    border: 1px solid #DBA42C;
+}
+
+/* Mode sombre admin (admin.php) */
+#dark-toggle-btn {
+    position: fixed;
+    top: 18px;
+    right: 30px;
+    z-index: 2000;
+    background: #fff;
+    border-radius: 6px;
+    padding: 6px 18px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(44,161,219,0.08);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#dark-toggle:checked ~ #main-content,
+#dark-toggle:checked ~ #main-content * {
+    background-color: #23272f !important;
     color: #DBA42C !important;
+    border-color: #DB6F2C !important;
+}
+#dark-toggle:checked ~ #main-content .btn,
+#dark-toggle:checked ~ #main-content .btn-primary,
+#dark-toggle:checked ~ #main-content .btn-outline-primary {
+    color: #DBA42C !important;
+    border-color: #DB6F2C !important;
+    background-color: transparent !important;
+}
+#dark-toggle:checked ~ #main-content .btn-primary {
+    background-color: #2CA1DB !important;
+    color: #fff !important;
+}
+#dark-toggle:checked ~ #main-content .btn-danger {
+    background-color: #DB6F2C !important;
+    color: #fff !important;
+}
+#dark-toggle:checked ~ #main-content input,
+#dark-toggle:checked ~ #main-content textarea,
+#dark-toggle:checked ~ #main-content select {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+    border-color: #444 !important;
+}
+#dark-toggle:checked ~ #main-content input:focus,
+#dark-toggle:checked ~ #main-content textarea:focus,
+#dark-toggle:checked ~ #main-content select:focus {
     border-color: #DBA42C !important;
 }
-/* Masquer le tableau des responsables en mode portrait (mobile) */
-@media (orientation: portrait), (max-width: 600px) {
-    #table-responsables {
-        display: none !important;
-    }
-}/* Entrées du tableau alignées à gauche sur mobile */
-@media (max-width: 600px), (orientation: portrait) {
-    .stylish-table td, .stylish-table th {
-        text-align: left !important;
-        justify-content: flex-start !important;
-    }
+#dark-toggle:checked ~ #main-content .form-label,
+#dark-toggle:checked ~ #main-content label {
+    color: #DBA42C !important;
 }
-/* Mode bombe : fond animé CSS */
-.bomb-mode {
-    background: url('https://i.gifer.com/HPO1.gif') center center / cover no-repeat fixed !important;
+#dark-toggle:checked ~ #main-content .titre-entrees {
+    color: #DBA42C !important;
 }
-/* Fond vidéo et message pour le mode nuke */
-.nuke-bg-container {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99999;
+#dark-toggle:checked ~ #main-content .bg-white {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+}
+#dark-toggle:checked ~ #main-content .shadow-sm {
+    box-shadow: 0 2px 16px rgba(219,164,44,0.08) !important;
+}
+
+/* Liste des types de matériaux (admin.php) */
+.material-type-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.material-type-list li {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 4px 10px;
+    background: #eaf6fb;
+    color: #2CA1DB;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+/* Centrer formulaire de sélection */
+.form-select {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 1rem auto;
+}
+
+/* Tableau arrondi pour consultation */
+.rounded-table {
+    border-radius: 12px;
     overflow: hidden;
-    background: #000;
 }
-.nuke-bg-video {
+
+/* Réduit la taille du camembert */
+.small-pie-chart {
+    max-width: 350px;
+    max-height: 350px;
+}
+
+/* Logo fabtrack */
+.logo-fabtrack-float {
     position: absolute;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: 1;
+    top: 64px; /* adapte à la hauteur de la navbar */
+    right: 0px;
+    left: auto;
+    z-index: 1000;
+    width:300px; /* adapte la taille du logo */
+    height: auto;
+    pointer-events: none;
 }
-.nuke-message {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    background: rgba(0,0,0,0.7);
-    color: #fff;
-    border: none;
-    padding: 2rem;
-    border-radius: 1rem;
-    text-align: center;
-    z-index: 2;
+.logo-fabtrack-float img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
 }
-.nuke-bg-gif {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: 99999;
+.logo-fabtrack-float .logo-dark {
+    display: none;
+}
+body.dark-mode .logo-fabtrack-float .logo-light {
+    display: none;
+}
+body.dark-mode .logo-fabtrack-float .logo-dark {
+    display: block;
 }

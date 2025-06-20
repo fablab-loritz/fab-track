@@ -20,6 +20,7 @@ $pdo = getPDO();
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="C:/Users/mat88/Downloads/virtualhost/css/custom.css" />
 </head>
+<link rel="icon" type="image/x-icon" href="icones/logo-fab-track.ico">
 <body<?php
     $classes = [];
     if ($darkmode) $classes[] = 'dark-mode';
@@ -37,7 +38,10 @@ $pdo = getPDO();
     <span class="navbar-brand">Fab-Track</span>
   </div>
 </nav>
-
+<div class="logo-fabtrack-float">
+    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
+    <img src="icones/Logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
+</div>
 <div class="container">
 
 <?php
@@ -218,6 +222,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['delete_selected']) &
         echo '<option value="' . $r['id'] . '">' . htmlspecialchars($r['name']) . '</option>';
     }
     echo '</select></div>';
+    //liste classes 
+    $stmtClasses = $pdo->query("SELECT id, name FROM classes ORDER BY name ASC");
+    $classes = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
+
+    echo '<label for="classe" class="form-label fw-semibold">Sélectionner une classe 📚 :</label>';
+    echo '<select id="classe" name="classe" class="form-select">';
+    echo '<option value="" disabled selected>Choisir une classe...</option>';
+    foreach ($classes as $classe) {
+        echo '<option value="' . $classe['id'] . '">' . htmlspecialchars($classe['name']) . '</option>';
+    }
+    echo '</select>';
 
     // Bouton d'envoi
     echo '<button type="submit" class="btn btn-primary" name="add_record">Ajouter</button>';
@@ -233,6 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_record'])) {
     $quantite = (int)($_POST['quantite'] ?? 0);
     $professor_name = trim($_POST['professor_name'] ?? '');
     $responsible_id = (int)($_POST['responsible'] ?? 0);
+	$classe_id = (int)($_POST['classe'] ?? 0);
 
     if ($machine_id > 0 && $quantite > 0 && $professor_name !== '' && $responsible_id > 0) {
         $material_id = null;
@@ -263,8 +279,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_record'])) {
             } else {
                 // Insertion dans la table enregistrements AVEC la colonne quantite
                 $sqlInsert = "INSERT INTO enregistrements 
-                    (machine_id, modele_id, material_id, epaisseur, professor_id, responsible_id, quantite) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    (machine_id, modele_id, material_id, epaisseur, professor_id, responsible_id, quantite,class_id) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmtInsert = $pdo->prepare($sqlInsert);
                 $stmtInsert->execute([
                     $machine_id,
@@ -273,7 +289,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_record'])) {
                     $epaisseur ?: null,
                     $professor_id,
                     $responsible_id,
-                    $quantite
+                    $quantite,
+					$classe_id
                 ]);
 
                 // Mise à jour du stock (peut devenir négatif)
@@ -294,13 +311,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_record'])) {
 // === Tableau de toutes les entrées (toutes machines) ===
 $sqlAll = "SELECT e.id, m.NAME AS machine_name, mo.name AS modele_name, 
         mat.name AS material_name, e.quantite, 
-        CONCAT(p.first_name, ' ', p.last_name) AS professor_name, r.name AS responsible_name
+        CONCAT(p.first_name, ' ', p.last_name) AS professor_name, r.name AS responsible_name,
+        c.name AS classe_name
         FROM enregistrements e
         LEFT JOIN machines m ON e.machine_id = m.ID
         LEFT JOIN modele mo ON e.modele_id = mo.id
         LEFT JOIN materials mat ON e.material_id = mat.id
         LEFT JOIN professors p ON e.professor_id = p.id
         LEFT JOIN responsibles r ON e.responsible_id = r.id
+        LEFT JOIN classes c ON e.class_id = c.id
         ORDER BY e.id DESC";
 $stmtAll = $pdo->query($sqlAll);
 $allEntries = $stmtAll->fetchAll(PDO::FETCH_ASSOC);
@@ -313,8 +332,8 @@ if ($allEntries) {
     echo '<table class="table table-hover table-bordered align-middle stylish-table">';
     echo '<thead class="table-primary">';
     echo '<tr>';
-    echo '<th>Sélection</th><th>Machine</th><th>Modèle</th><th>Matériau / Variante</th><th>Quantité</th><th>Professeur</th><th>Responsable</th>';
-    echo '</tr></thead><tbody>';
+	echo '<th>Sélection</th><th>Machine</th><th>Modèle</th><th>Matériau / Variante</th><th>Quantité</th><th>Professeur</th><th>Responsable</th><th>Classe</th>';
+	echo '</tr></thead><tbody>';
     foreach ($allEntries as $e) {
         echo '<tr>';
         echo '<td class="text-center"><input type="checkbox" name="delete_ids[]" value="' . $e['id'] . '"></td>';
@@ -324,7 +343,8 @@ if ($allEntries) {
         echo '<td class="text-center">' . (int)$e['quantite'] . '</td>';
         echo '<td>' . htmlspecialchars($e['professor_name']) . '</td>';
         echo '<td>' . htmlspecialchars($e['responsible_name']) . '</td>';
-        echo '</tr>';
+		echo '<td>' . htmlspecialchars($e['classe_name'] ?? '') . '</td>';
+		echo '</tr>';
     }
     echo '</tbody></table></div>';
     echo '<button type="submit" name="delete_selected" class="btn btn-danger mt-2">Supprimer sélection</button>';

@@ -1,0 +1,663 @@
+/* Base */
+body {
+    background-color: #F8F9FA;
+    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Titres */
+h1, h2, h3 {
+    color: #2CA1DB;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.titre-entrees {
+    color: #2CA1DB !important; /* Bleu en mode normal */
+}
+/* Table */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+.table thead {
+    background-color: #2CA1DB;
+    color: white;
+    font-weight: 600;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F2F2F2;
+}
+.table-hover tbody tr:hover {
+    background-color: #DBA42C33;
+    transition: background 0.2s;
+}
+.table th, .table td {
+    vertical-align: middle;
+    padding: 0.75rem;
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: #2CA1DB;
+    border-color: #2CA1DB;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.btn-primary:hover {
+    background-color: #238AC2;
+    border-color: #238AC2;
+}
+.btn-warning {
+    background-color: #DBA42C;
+    border-color: #DBA42C;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-warning:hover {
+    background-color: #C49125;
+    border-color: #C49125;
+}
+.btn-danger {
+    background-color: #DB6F2C;
+    border-color: #DB6F2C;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-danger:hover {
+    background-color: #C75F22;
+    border-color: #C75F22;
+}
+.btn-dark {
+    background-color: #5C4B40;
+    border-color: #5C4B40;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-dark:hover {
+    background-color: #4A3D34;
+    border-color: #4A3D34;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    border-radius: 6px;
+    border: 1px solid #CED4DA;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.2s, color 0.2s;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #2CA1DB;
+    box-shadow: 0 0 0 0.2rem rgba(44, 161, 219, 0.15);
+    outline: none;
+}
+
+/* Labels */
+label, .form-label {
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+    transition: color 0.2s;
+}
+
+/* Modernisation du formulaire */
+form.border.p-4.rounded.shadow-sm.bg-white {
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(44,161,219,0.08);
+    border-radius: 12px;
+    padding: 2rem 2rem 1.5rem 2rem;
+    margin-bottom: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Badges et tags */
+.badge-primary {
+    background-color: #2CA1DB;
+}
+.badge-warning {
+    background-color: #DBA42C;
+}
+.badge-danger {
+    background-color: #DB6F2C;
+}
+.badge-dark {
+    background-color: #5C4B40;
+}
+
+/* Textes colorés */
+.text-primary {
+    color: #2CA1DB !important;
+}
+.text-warning {
+    color: #DBA42C !important;
+}
+.text-danger {
+    color: #DB6F2C !important;
+}
+.text-dark {
+    color: #5C4B40 !important;
+}
+.text-muted {
+    color: #40535C !important;
+}
+
+/* Bordures personnalisées */
+.border-dark-custom {
+    border: 1px solid #5C5340;
+}
+
+/* Cartes */
+.card {
+    border: 1px solid #DBA42C;
+    border-radius: 8px;
+}
+.card-header {
+    background-color: #2CA1DB;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px 8px 0 0;
+}
+.card-body {
+    background-color: #fff;
+    color: #333;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Tableau des responsables en haut à droite */
+#table-responsables {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    width: 300px;
+    max-height: 340px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1.5px solid #2CA1DB;
+    box-shadow: 0 2px 16px rgba(44,161,219,0.08);
+    padding: 18px 14px 14px 14px;
+    font-size: 0.95rem;
+    z-index: 1050;
+    border-radius: 12px;
+    transition: background 0.2s, color 0.2s;
+}
+#table-responsables table {
+    font-size: 0.95rem;
+    margin-top: 10px;
+}
+
+/* Décalage du contenu principal pour ne pas être sous le tableau des responsables */
+.container {
+    margin-right: 340px;
+    max-width: 900px;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: bold;
+    color: #2CA1DB !important; /* Bleu Fab-Track */
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin-right: 70px;
+}
+.navbar {
+    /* border-bottom: 2px solid #2CA1DB; */ /* Ligne bleue supprimée */
+    background: #fff;
+    margin-bottom: 2rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* Supprimer le bouton "Mode sombre" du contenu principal */
+.container .btn.btn-outline-primary {
+    display: none !important;
+}
+
+/* Responsive : corrige la media query mal fermée */
+@media (max-width: 900px) {
+    #table-responsables, .table-container {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+        box-shadow: none;
+    }
+    .container {
+        margin-right: 0;
+        max-width: 100%;
+    }
+}
+
+/*MODE SOMBRE PERSONNALISÉ*/
+body.dark-mode {
+    background-color: #23272f !important;
+    color: #DBA42C !important; /* Couleur de texte plus douce */
+}
+body.dark-mode .titre-entrees {
+    color: #DBA42C !important;
+}
+/* Tableaux (haut et bas) */
+body.dark-mode .table,
+body.dark-mode .table-bordered,
+body.dark-mode .table-striped,
+body.dark-mode .table th,
+body.dark-mode .table td {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #444 !important;
+}
+body.dark-mode .table thead,
+body.dark-mode .table thead th {
+    background-color: #23272f !important;
+    color: #fff !important;
+    border-color: #444 !important;
+}
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #24282e !important;
+}
+
+/* Tableau des responsables */
+body.dark-mode #table-responsables {
+    background-color: #181a1b !important;
+    border-color: #444 !important;
+}
+body.dark-mode #table-responsables table,
+body.dark-mode #table-responsables th,
+body.dark-mode #table-responsables td,
+body.dark-mode #table-responsables tr {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #444 !important;
+}
+body.dark-mode #table-responsables thead {
+    background-color: #23272f !important;
+    color: #fff !important;
+}
+body.dark-mode #table-responsables tr:nth-child(odd) {
+    background-color: #24282e !important;
+}
+
+/* Harmonisation des couleurs (orange bouton supprimer) */
+body.dark-mode .text-primary,
+body.dark-mode .text-warning,
+body.dark-mode .text-danger,
+body.dark-mode .text-dark,
+body.dark-mode .navbar-brand,
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3,
+body.dark-mode .badge-primary,
+body.dark-mode .badge-warning,
+body.dark-mode .badge-danger,
+body.dark-mode .badge-dark,
+body.dark-mode .btn-outline-primary,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-warning,
+body.dark-mode .btn-dark,
+body.dark-mode .btn-danger,
+body.dark-mode a,
+body.dark-mode label,
+body.dark-mode .form-label {
+    color: #DBA42C !important;
+    border-color: #DB6F2C !important;
+    background-color: transparent !important;
+}
+
+/* Pour les badges et boutons, garder le fond orange */
+body.dark-mode .btn-danger,
+body.dark-mode .badge-danger {
+    background-color: #DB6F2C !important;
+    color: #fff !important;
+    border-color: #DB6F2C !important;
+}
+body.dark-mode .btn-danger:hover {
+    background-color: #C75F22 !important;
+    border-color: #C75F22 !important;
+}
+
+/* Inputs et formulaires */
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode form.border.p-4.rounded.shadow-sm.bg-white {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+    border-color: #444 !important;
+}
+
+/* Navbar et cartes */
+body.dark-mode .navbar,
+body.dark-mode .card,
+body.dark-mode .bg-white {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+    border-color: #444 !important;
+}
+
+/* Bordures personnalisées */
+body.dark-mode .border-dark-custom {
+    border-color: #444 !important;
+}
+
+/*Changement pour adaptation mobile : mode téléphone portrait */
+@media (orientation: portrait) {
+    /* Agrandir les tableaux */
+    .table, .table th, .table td {
+        font-size: 1.25rem;
+        padding: 1.2rem;
+    }
+
+    /* Agrandir les boutons */
+    .btn, .btn-primary, .btn-danger, .btn-warning, .btn-dark {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    /* Agrandir les champs de formulaire */
+    .form-control, .form-select {
+        font-size: 1.15rem;
+        padding: 1rem 1.2rem;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    /* Titres plus gros et centrés */
+    h1, h2, h3 {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    /* Espacement plus important */
+    .container, form.border.p-4.rounded.shadow-sm.bg-white {
+        padding: 2.5rem 1rem !important;
+        margin: 0 !important;
+        max-width: 100%;
+    }
+
+    /* Table des responsables en haut, pleine largeur */
+    #table-responsables {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+        box-shadow: none;
+        right: auto;
+        top: auto;
+    }
+
+    /* Contenu principal sans marge à droite */
+    .container {
+        margin-right: 0;
+        max-width: 100%;
+    }
+
+    /* Tableaux en mode carte pour mobile */
+    .table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    .table thead {
+        display: none;
+    }
+    .table tbody, .table tr {
+        display: block;
+        width: 100%;
+    }
+    .table td {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0.5rem;
+        border-bottom: 1px solid #444;
+        font-size: 1.1rem;
+    }
+    .table td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #2CA1DB;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+}
+
+/* Alerte stock bas : bleu en normal, orange en sombre */
+.alert-stock {
+    background-color: #e7f3fa !important;
+    color: #2CA1DB !important;
+    border-color: #2CA1DB !important;
+}
+body.dark-mode .alert-stock {
+    background-color: #2d2117 !important;
+    color: #DBA42C !important;
+    border-color: #DBA42C !important;
+}
+/* Masquer le tableau des responsables en mode portrait (mobile) */
+@media (orientation: portrait), (max-width: 600px) {
+    #table-responsables {
+        display: none !important;
+    }
+}/* Entrées du tableau alignées à gauche sur mobile */
+@media (max-width: 600px), (orientation: portrait) {
+    .stylish-table td, .stylish-table th {
+        text-align: left !important;
+        justify-content: flex-start !important;
+    }
+}
+/* Mode bombe : fond animé CSS */
+.bomb-mode {
+    background: url('https://i.gifer.com/HPO1.gif') center center / cover no-repeat fixed !important;
+}
+/* Fond vidéo et message pour le mode nuke */
+.nuke-bg-container {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    overflow: hidden;
+    background: #000;
+}
+.nuke-bg-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 1;
+}
+.nuke-message {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    border: none;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    z-index: 2;
+}
+.nuke-bg-gif {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 99999;
+}
+#dark-toggle-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2000;
+    cursor: pointer;
+}
+/* Base */
+body {
+    background-color: #F8F9FA;
+    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Titres */
+h1, h2, h3 {
+    color: #2CA1DB;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.titre-entrees {
+    color: #2CA1DB !important;
+}
+
+/* Table */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+/* Bouton mode sombre toujours en haut à droite */
+#dark-toggle-btn {
+    position: fixed;
+    top: 0.5rem;
+    right: 1rem;
+    z-index: 2000;
+    cursor: pointer;
+    background: transparent;
+}
+
+/* Mode sombre */
+#dark-toggle:checked ~ #main-content,
+#dark-toggle:checked ~ #main-content * {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #444 !important;
+}
+
+#dark-toggle:checked ~ #main-content .btn,
+#dark-toggle:checked ~ #main-content .btn-primary,
+#dark-toggle:checked ~ #main-content .btn-outline-primary {
+    background-color: transparent !important;
+    color: #DBA42C !important;
+    border-color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .btn-primary {
+    background-color: #DBA42C !important;
+    color: #23272f !important;
+    border-color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .btn-danger {
+    background-color: #DB6F2C !important;
+    color: #fff !important;
+    border-color: #DB6F2C !important;
+}
+#dark-toggle:checked ~ #main-content input,
+#dark-toggle:checked ~ #main-content textarea,
+#dark-toggle:checked ~ #main-content select {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #444 !important;
+}
+#dark-toggle:checked ~ #main-content input:focus,
+#dark-toggle:checked ~ #main-content textarea:focus,
+#dark-toggle:checked ~ #main-content select:focus {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #DBA42C !important;
+    box-shadow: 0 0 0 0.2rem rgba(219,164,44,0.25);
+}
+#dark-toggle:checked ~ #main-content .form-label,
+#dark-toggle:checked ~ #main-content label {
+    color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .material-type-list li {
+    color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .titre-entrees {
+    color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .bg-white {
+    background-color: #23272f !important;
+}
+#dark-toggle:checked ~ #main-content .shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(219,164,44,0.075) !important;
+}
+
+/* Liste des types de matériaux */
+.material-type-list {
+    margin-top: 0.5em;
+    font-size: 0.97em;
+    margin-left: 0;
+}
+.material-type-list li {
+    margin-bottom: 0.2em;
+    white-space: nowrap;
+}
+
+/* Conteneurs entête */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.theme-toggle {
+    min-width: 150px;
+}
+
+/* Bordure du tableau selon thème */
+.table-bordered {
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Bordures internes tableau */
+.table-bordered th,
+.table-bordered td {
+    border-color: var(--border-color) !important;
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+/* Variables CSS pour couleurs par thème */
+:root {
+    --border-color: #0d6efd; /* bleu bootstrap par défaut */
+}
+body.dark-mode {
+    --border-color: #fd7e14; /* orange bootstrap en sombre */
+}
+
+/* Centrer formulaire de sélection */
+.form-select {
+    display: inline-block;
+    margin-bottom: 1rem;
+}

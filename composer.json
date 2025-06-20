@@ -1,0 +1,12 @@
+{
+    "name": "matheo/gestion-stock",
+    "description": "rien",
+    "autoload": {
+        "psr-4": {
+            "Matheo\\GestionStock\\": "src/"
+        }
+    },
+    "require": {
+        "evelode/tiktok-api-php": "1.0.2"
+    }
+}
