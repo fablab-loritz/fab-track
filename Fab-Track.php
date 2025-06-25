@@ -28,20 +28,26 @@ $pdo = getPDO();
 ?>>
 
 <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-  <div class="container-fluid">
+  <div class="container-fluid d-flex align-items-center">
     <?php
-    $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
+      $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
     ?>
-    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
+    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
         <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
     </a>
-    <span class="navbar-brand">Fab-Track</span>
+    <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
+    <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
+    <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
+    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">
+        Fab-Track
+        <div class="logo-fabtrack-float ms-2">
+            <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
+            <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
+        </div>
+    </span>
   </div>
 </nav>
-<div class="logo-fabtrack-float">
-    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
-    <img src="icones/Logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
-</div>
+
 <div class="container">
 
 <?php
@@ -248,7 +254,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_record'])) {
     $quantite = (int)($_POST['quantite'] ?? 0);
     $professor_name = trim($_POST['professor_name'] ?? '');
     $responsible_id = (int)($_POST['responsible'] ?? 0);
-	$classe_id = (int)($_POST['classe'] ?? 0);
+    $classe_id = (int)($_POST['classe'] ?? 0);
 
     if ($machine_id > 0 && $quantite > 0 && $professor_name !== '' && $responsible_id > 0) {
         $material_id = null;
@@ -290,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_record'])) {
                     $professor_id,
                     $responsible_id,
                     $quantite,
-					$classe_id
+                    $classe_id
                 ]);
 
                 // Mise à jour du stock (peut devenir négatif)
@@ -332,8 +338,8 @@ if ($allEntries) {
     echo '<table class="table table-hover table-bordered align-middle stylish-table">';
     echo '<thead class="table-primary">';
     echo '<tr>';
-	echo '<th>Sélection</th><th>Machine</th><th>Modèle</th><th>Matériau / Variante</th><th>Quantité</th><th>Professeur</th><th>Responsable</th><th>Classe</th>';
-	echo '</tr></thead><tbody>';
+    echo '<th>Sélection</th><th>Machine</th><th>Modèle</th><th>Matériau / Variante</th><th>Quantité</th><th>Professeur</th><th>Responsable</th><th>Classe</th>';
+    echo '</tr></thead><tbody>';
     foreach ($allEntries as $e) {
         echo '<tr>';
         echo '<td class="text-center"><input type="checkbox" name="delete_ids[]" value="' . $e['id'] . '"></td>';
@@ -343,8 +349,8 @@ if ($allEntries) {
         echo '<td class="text-center">' . (int)$e['quantite'] . '</td>';
         echo '<td>' . htmlspecialchars($e['professor_name']) . '</td>';
         echo '<td>' . htmlspecialchars($e['responsible_name']) . '</td>';
-		echo '<td>' . htmlspecialchars($e['classe_name'] ?? '') . '</td>';
-		echo '</tr>';
+        echo '<td>' . htmlspecialchars($e['classe_name'] ?? '') . '</td>';
+        echo '</tr>';
     }
     echo '</tbody></table></div>';
     echo '<button type="submit" name="delete_selected" class="btn btn-danger mt-2">Supprimer sélection</button>';

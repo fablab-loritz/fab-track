@@ -55,6 +55,10 @@ $materials = $stmt->fetchAll();
     <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
         <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
     </a>
+            <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
+            <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
+            <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
+    </a>
     <span class="navbar-brand">Gestion du Stock</span>
   </div>
 </nav>

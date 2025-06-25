@@ -4,7 +4,7 @@ session_start();
 // Gestion du mode sombre via cookie
 if (isset($_GET['darkmode'])) {
     setcookie('darkmode', $_GET['darkmode'], time() + 365*24*3600, "/");
-	$_COOKIE['darkmode'] = $_GET['darkmode']; // Pour effet immédiat
+    $_COOKIE['darkmode'] = $_GET['darkmode']; // Pour effet immédiat
 }
 $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
 
@@ -194,21 +194,24 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($classes) echo ' class="' . implode(' ', $classes) . '"';
 ?>>
 <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-  <div class="container-fluid d-flex justify-content-between">
-    <div>
-<div class="logo-fabtrack-float">
-    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
-    <img src="icones/Logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
-</div>
-      <?php
+  <div class="container-fluid align-items-center d-flex">
+    <?php
       $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-      ?>
-      <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
-          <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-      </a>
-    <span class="navbar-brand ms-2">Fab-Track - Consultation</span>
+    ?>
+    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
+        <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+    </a>
+    <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
+    <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
+    <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
+    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">Consultation</a>
+        <div class="logo-fabtrack-float ms-4">
+            <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 100px; width: auto;">
+            <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 100px; width: auto;">
+        </div>
+    </span>
+  </div>
 </nav>
-<div class="container mt-4">
 
     <!-- Le tableau en premier -->
     <form method="post" class="mb-4">
@@ -330,7 +333,6 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <!-- Fin bloc camembert -->
 
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

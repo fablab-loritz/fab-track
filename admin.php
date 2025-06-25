@@ -128,7 +128,7 @@ foreach ($materials as $mat) {
 ?>>
     <div class="logo-fabtrack-float">
         <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
-        <img src="icones/Logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
+        <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
     </div>
     <nav class="navbar navbar-light bg-white shadow-sm mb-4">
       <div class="container-fluid">
@@ -137,6 +137,9 @@ foreach ($materials as $mat) {
         ?>
         <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
             <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+            <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
+            <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
+            <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
         </a>
         <span class="navbar-brand">Administration</span>
       </div>
