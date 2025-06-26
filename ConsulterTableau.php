@@ -204,7 +204,8 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
     <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
     <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
-    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">Consultation</a>
+    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">
+        CONSULTATION
         <div class="logo-fabtrack-float ms-4">
             <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 100px; width: auto;">
             <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 100px; width: auto;">

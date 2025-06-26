@@ -95,7 +95,7 @@ if (isset($_POST['delete_variante'])) {
     echo "<div class='alert alert-warning'>Variante supprimée !</div>";
 }
 
-// Récupérer dynamiquement les types de matériaux
+// Récupérer les types de matériaux
 $types = $pdo->query("SELECT id, name FROM material_types ORDER BY id")->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les listes pour les listes déroulantes
@@ -130,19 +130,19 @@ foreach ($materials as $mat) {
         <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
         <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
     </div>
-    <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-      <div class="container-fluid">
-        <?php
-        $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-        ?>
-        <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
-            <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-            <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
-            <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
-            <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
-        </a>
-        <span class="navbar-brand">Administration</span>
-      </div>
+        <nav class="navbar navbar-light bg-white shadow-sm mb-4">
+    <div class="container-fluid">
+<?php
+$toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
+?>
+<a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
+    <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+</a>
+<a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
+<a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
+<a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
+<span class="navbar-brand ms-auto">Administration</span>
+    </div>
     </nav>
     <div id="main-content">
         <div class="container py-4">

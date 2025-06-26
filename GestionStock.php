@@ -43,23 +43,18 @@ $materials = $stmt->fetchAll();
     if ($darkmode) $classes[] = 'dark-mode';
     if ($classes) echo ' class="' . implode(' ', $classes) . '"';
 ?>>
-<div class="logo-fabtrack-float">
-    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
-    <img src="icones/Logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
-</div>
 <nav class="navbar navbar-light bg-white shadow-sm mb-4">
   <div class="container-fluid">
     <?php
     $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
     ?>
-    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary">
+    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
         <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
     </a>
-            <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
-            <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
-            <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
-    </a>
-    <span class="navbar-brand">Gestion du Stock</span>
+    <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
+    <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
+    <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
+    <span class="navbar-brand ms-auto">Gestion du Stock</span>
   </div>
 </nav>
 <div class="container">
