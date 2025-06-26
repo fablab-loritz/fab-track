@@ -1,0 +1,453 @@
+/* Base */
+body {
+    background-color: #F8F9FA;
+    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Titres */
+h1, h2, h3 {
+    color: #2CA1DB;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.titre-entrees {
+    color: #2CA1DB !important;
+}
+
+/* Table */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+.table thead {
+    background-color: #2CA1DB;
+    color: white;
+    font-weight: 600;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F2F2F2;
+}
+.table-hover tbody tr:hover {
+    background-color: #DBA42C33;
+    transition: background 0.2s;
+}
+.table th, .table td {
+    vertical-align: middle;
+    padding: 0.75rem;
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: #2CA1DB;
+    border-color: #2CA1DB;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.btn-primary:hover {
+    background-color: #238AC2;
+    border-color: #238AC2;
+}
+.btn-warning {
+    background-color: #DBA42C;
+    border-color: #DBA42C;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-warning:hover {
+    background-color: #C49125;
+    border-color: #C49125;
+}
+.btn-danger {
+    background-color: #DB6F2C;
+    border-color: #DB6F2C;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-danger:hover {
+    background-color: #C75F22;
+    border-color: #C75F22;
+}
+.btn-dark {
+    background-color: #5C4B40;
+    border-color: #5C4B40;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-dark:hover {
+    background-color: #4A3D34;
+    border-color: #4A3D34;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    border-radius: 6px;
+    border: 1px solid #CED4DA;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.2s, color 0.2s;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #2CA1DB;
+    box-shadow: 0 0 0 0.2rem rgba(44, 161, 219, 0.15);
+    outline: none;
+}
+
+/* Labels */
+label, .form-label {
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+    transition: color 0.2s;
+}
+
+/* Modernisation du formulaire */
+form.border.p-4.rounded.shadow-sm.bg-white {
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(44,161,219,0.08);
+    border-radius: 12px;
+    padding: 2rem 2rem 1.5rem 2rem;
+    margin-bottom: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Textes colorés */
+.text-primary {
+    color: #2CA1DB !important;
+}
+.text-warning {
+    color: #DBA42C !important;
+}
+.text-danger {
+    color: #DB6F2C !important;
+}
+.text-dark {
+    color: #5C4B40 !important;
+}
+.text-muted {
+    color: #40535C !important;
+}
+
+/* Tableau des responsables en haut à gauche */
+#table-responsables {
+    position: absolute;
+    top: 64px; /* adapte à la hauteur de la navbar */
+    left: 30px;
+    width: 300px;
+    max-height: 340px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1.5px solid #2CA1DB;
+    box-shadow: 0 2px 16px rgba(44,161,219,0.08);
+    padding: 18px 14px 14px 14px;
+    font-size: 0.95rem;
+    z-index: 1050;
+    border-radius: 12px;
+    transition: background 0.2s, color 0.2s;
+}
+#table-responsables table {
+    font-size: 0.95rem;
+    margin-top: 10px;
+}
+
+/* Décalage du contenu principal pour ne pas être sous le tableau des responsables */
+.container {
+    max-width: 900px;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: bold;
+    color: #2CA1DB !important;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin-right: 70px;
+}
+.navbar {
+    background: #fff;
+    margin-bottom: 2rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* Supprimer le bouton "Mode sombre" du contenu principal */
+.container .btn.btn-outline-primary {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    #table-responsables {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        top: auto;
+        right: auto;
+    }
+}
+
+/* MODE SOMBRE PERSONNALISÉ */
+body.dark-mode {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+}
+body.dark-mode .titre-entrees {
+    color: #DBA42C !important;
+}
+body.dark-mode .table,
+body.dark-mode .table-bordered,
+body.dark-mode .table-striped,
+body.dark-mode .table th,
+body.dark-mode .table td {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #444 !important;
+}
+body.dark-mode .table thead,
+body.dark-mode .table thead th {
+    background-color: #23272f !important;
+    color: #fff !important;
+    border-color: #444 !important;
+}
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #24282e !important;
+}
+body.dark-mode #table-responsables {
+    background-color: #181a1b !important;
+    border-color: #444 !important;
+}
+body.dark-mode #table-responsables table,
+body.dark-mode #table-responsables th,
+body.dark-mode #table-responsables td,
+body.dark-mode #table-responsables tr {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #444 !important;
+}
+body.dark-mode #table-responsables thead {
+    background-color: #23272f !important;
+    color: #fff !important;
+}
+body.dark-mode #table-responsables tr:nth-child(odd) {
+    background-color: #24282e !important;
+}
+body.dark-mode .text-primary,
+body.dark-mode .text-warning,
+body.dark-mode .text-danger,
+body.dark-mode .text-dark,
+body.dark-mode .navbar-brand,
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3,
+body.dark-mode .btn-outline-primary,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-warning,
+body.dark-mode .btn-dark,
+body.dark-mode .btn-danger,
+body.dark-mode a,
+body.dark-mode label,
+body.dark-mode .form-label {
+    color: #DBA42C !important;
+    border-color: #DB6F2C !important;
+    background-color: transparent !important;
+}
+body.dark-mode .btn-danger {
+    background-color: #DB6F2C !important;
+    color: #fff !important;
+    border-color: #DB6F2C !important;
+}
+body.dark-mode .btn-danger:hover {
+    background-color: #C75F22 !important;
+    border-color: #C75F22 !important;
+}
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode form.border.p-4.rounded.shadow-sm.bg-white {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+    border-color: #444 !important;
+}
+body.dark-mode .navbar,
+body.dark-mode .bg-white {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+    border-color: #444 !important;
+}
+
+/* Changement pour adaptation mobile : mode téléphone portrait */
+@media (orientation: portrait) {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    #table-responsables {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        top: auto;
+        right: auto;
+    }
+}
+
+/* Alerte stock bas */
+.alert-stock {
+    background-color: #eaf6fb;
+    color: #2CA1DB;
+    border: 1px solid #2CA1DB;
+}
+body.dark-mode .alert-stock {
+    background-color: #2d2d2d;
+    color: #DBA42C;
+    border: 1px solid #DBA42C;
+}
+
+/* Mode sombre admin (admin.php) */
+#dark-toggle-btn {
+    position: fixed;
+    top: 18px;
+    right: 30px;
+    z-index: 2000;
+    background: #fff;
+    border-radius: 6px;
+    padding: 6px 18px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(44,161,219,0.08);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#dark-toggle:checked ~ #main-content,
+#dark-toggle:checked ~ #main-content * {
+    background-color: #23272f !important;
+    color: #DBA42C !important;
+    border-color: #DB6F2C !important;
+}
+#dark-toggle:checked ~ #main-content .btn,
+#dark-toggle:checked ~ #main-content .btn-primary,
+#dark-toggle:checked ~ #main-content .btn-outline-primary {
+    color: #DBA42C !important;
+    border-color: #DB6F2C !important;
+    background-color: transparent !important;
+}
+#dark-toggle:checked ~ #main-content .btn-primary {
+    background-color: #2CA1DB !important;
+    color: #fff !important;
+}
+#dark-toggle:checked ~ #main-content .btn-danger {
+    background-color: #DB6F2C !important;
+    color: #fff !important;
+}
+#dark-toggle:checked ~ #main-content input,
+#dark-toggle:checked ~ #main-content textarea,
+#dark-toggle:checked ~ #main-content select {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+    border-color: #444 !important;
+}
+#dark-toggle:checked ~ #main-content input:focus,
+#dark-toggle:checked ~ #main-content textarea:focus,
+#dark-toggle:checked ~ #main-content select:focus {
+    border-color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .form-label,
+#dark-toggle:checked ~ #main-content label {
+    color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .titre-entrees {
+    color: #DBA42C !important;
+}
+#dark-toggle:checked ~ #main-content .bg-white {
+    background-color: #23272f !important;
+    color: #bfc4c9 !important;
+}
+#dark-toggle:checked ~ #main-content .shadow-sm {
+    box-shadow: 0 2px 16px rgba(219,164,44,0.08) !important;
+}
+
+/* Liste des types de matériaux (admin.php) */
+.material-type-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.material-type-list li {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 4px 10px;
+    background: #eaf6fb;
+    color: #2CA1DB;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+/* Centrer formulaire de sélection */
+.form-select {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 1rem auto;
+}
+
+/* Tableau arrondi pour consultation */
+.rounded-table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Réduit la taille du camembert */
+.small-pie-chart {
+    max-width: 350px;
+    max-height: 350px;
+}
+
+/* Logo fabtrack */
+.logo-fabtrack-float {
+    position: absolute;
+    top: 64px; /* adapte à la hauteur de la navbar */
+    right: 0px;
+    left: auto;
+    z-index: 1000;
+    width:300px; /* adapte la taille du logo */
+    height: auto;
+    pointer-events: none;
+}
+.logo-fabtrack-float img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.logo-fabtrack-float .logo-dark {
+    display: none;
+}
+body.dark-mode .logo-fabtrack-float .logo-light {
+    display: none;
+}
+body.dark-mode .logo-fabtrack-float .logo-dark {
+    display: block;
+}
