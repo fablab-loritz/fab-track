@@ -97,19 +97,18 @@ h1, h2, h3 {
     color: #333;
     font-size: 1rem;
     padding: 0.5rem 0.75rem;
-    margin-bottom: 0 !important; /* Correction alignement boutons/champs */
+    margin-bottom: 1rem;
     text-align: left;
     width: 100%;
     box-sizing: border-box;
     transition: background 0.2s, color 0.2s;
-    height: 48px;        /* Hauteur harmonisée avec les champs texte */
-    min-height: 48px;    /* Force la hauteur minimale */
 }
 .form-control:focus, .form-select:focus {
     border-color: #2CA1DB;
     box-shadow: 0 0 0 0.2rem rgba(44, 161, 219, 0.15);
     outline: none;
 }
+
 /* Labels */
 label, .form-label {
     color: #333;
@@ -129,15 +128,6 @@ form.border.p-4.rounded.shadow-sm.bg-white {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
-}
-
-/* Correction alignement boutons et champs */
-.admin-form,
-.admin-delete,
-form.d-flex,
-form.align-items-end,
-form.row {
-    gap: 0.5em;
 }
 
 /* Textes colorés */
@@ -161,7 +151,7 @@ form.row {
 #table-responsables {
     position: absolute;
     top: 64px; /* adapte à la hauteur de la navbar */
-    left: 20px;
+    left: 30px;
     width: 300px;
     max-height: 340px;
     overflow-y: auto;
@@ -418,7 +408,8 @@ body.dark-mode .alert-stock {
 .form-select {
     display: block;
     width: 100%;
-    margin: 0 auto 0 auto; /* Correction : plus de margin-bottom */
+    max-width: 350px;
+    margin: 0 auto 1rem auto;
 }
 
 /* Tableau arrondi pour consultation */
@@ -440,7 +431,7 @@ body.dark-mode .alert-stock {
     right: 0px;
     left: auto;
     z-index: 1000;
-    width:200px; /* adapte la taille du logo */
+    width:300px; /* adapte la taille du logo */
     height: auto;
     pointer-events: none;
 }
@@ -459,20 +450,4 @@ body.dark-mode .logo-fabtrack-float .logo-light {
 }
 body.dark-mode .logo-fabtrack-float .logo-dark {
     display: block;
-}
-.btn-outline-secondary {
-    color: #2CA1DB;
-    border-color: #2CA1DB;
-    background-color: transparent;
-    font-weight: 500;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
-}
-
-.btn-outline-secondary:hover,
-.btn-outline-secondary:focus {
-    background-color: #2CA1DB;
-    color: #fff;
-    border-color: #2CA1DB;
-    text-decoration: none;
 }
