@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dbname = $_POST['dbname'];
 
     // Télécharger le zip depuis GitHub (lien raw)
-    $zipUrl = 'https://github.com/fablab-loritz/fab-track/raw/main/Fab-Track.zip';
+    $zipUrl = 'https://github.com/fablab-loritz/fab-track/blob/c9827db2593b72b25dd08d8b63d8750017198806/Fab-Track.zip';
     $zipFile = __DIR__ . '/Fab-Track.zip';
 
     $zipContent = @file_get_contents($zipUrl);
