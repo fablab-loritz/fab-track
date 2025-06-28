@@ -3,7 +3,7 @@ session_start();
 require_once 'config.php';
 $pdo = getPDO();
 
-// Liste des images de carottes (mets-les dans icones/)
+// Images de carottes
 $carottes = [
     "carotte1.png",
     "carotte2.png",
@@ -11,10 +11,10 @@ $carottes = [
     "carotte4.png"
 ];
 
-// Récupère la liste des responsables
-$responsables = $pdo->query("SELECT id, name FROM responsibles ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+// Récupère la liste des responsables (depuis responsibles)
+$responsables = $pdo->query("SELECT name FROM responsibles WHERE name IN ('Jeremy nouilles','Steven','Axel') ORDER BY name")->fetchAll(PDO::FETCH_COLUMN);
 
-// Gestion du cycle d'image et du responsable sélectionné
+// Gestion du responsable sélectionné
 if (isset($_POST['responsable_id'])) {
     $_SESSION['carotte_responsable'] = $_POST['responsable_id'];
 }
@@ -25,13 +25,15 @@ if (isset($_POST['carotte_click']) && !empty($selected_responsable)) {
     if (!isset($_SESSION['carotte_index'])) $_SESSION['carotte_index'] = 0;
     $_SESSION['carotte_index'] = ($_SESSION['carotte_index'] + 1) % count($carottes);
 
-    $responsable_id = intval($selected_responsable);
-    $pdo->prepare("UPDATE responsibles SET total = total + 1 WHERE id = ?")->execute([$responsable_id]);
+    // Incrémente le compteur dans carotte_clicks
+    $stmt = $pdo->prepare("INSERT INTO carotte_clicks (responsable, clicks) VALUES (?, 1)
+        ON DUPLICATE KEY UPDATE clicks = clicks + 1");
+    $stmt->execute([$selected_responsable]);
 }
 if (!isset($_SESSION['carotte_index'])) $_SESSION['carotte_index'] = 0;
 
-// Récupère le leaderboard
-$leaderboard = $pdo->query("SELECT name, total FROM responsibles ORDER BY total DESC")->fetchAll(PDO::FETCH_ASSOC);
+// Récupère le leaderboard carotte
+$leaderboard = $pdo->query("SELECT responsable, clicks FROM carotte_clicks WHERE responsable IN ('Jeremy nouilles','Steven','Axel') ORDER BY clicks DESC")->fetchAll(PDO::FETCH_ASSOC);
 
 // Mode sombre
 $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
@@ -43,7 +45,7 @@ $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
     <title>Carotte</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="icones/logo-fab-track.ico">
+    <link rel="icon" type="image/x-icon" href="icones/capybara Parfait.png">
     <style>
         body {
             background: url('icones/carottewalpaper.png') center center / cover no-repeat fixed;
@@ -80,22 +82,22 @@ $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
   </div>
 </nav>
 <div class="container py-4 d-flex">
-    <div class="flex-grow-1 text-center main-content-overlay" style="max-width:600px; min-width:400px;">
+    <div class="flex-grow-1 text-center main-content-overlay" style="max-width:700px; min-width:400px;">
         <form method="post" autocomplete="off">
             <div class="mb-3" style="max-width:350px;margin:auto;">
                 <label for="responsable_id" class="form-label">Responsable :</label>
                 <select name="responsable_id" id="responsable_id" class="form-select" required>
                     <option value="">Sélectionner un responsable...</option>
                     <?php foreach ($responsables as $resp): ?>
-                        <option value="<?= $resp['id'] ?>" <?= ($resp['id'] == $selected_responsable ? 'selected' : '') ?>>
-                            <?= htmlentities($resp['name']) ?>
+                        <option value="<?= htmlentities($resp) ?>" <?= ($resp == $selected_responsable ? 'selected' : '') ?>>
+                            <?= htmlentities($resp) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
-            <button type="submit" name="carotte_click" class="btn btn-dark btn-lg mb-4" <?= empty($selected_responsable) ? 'disabled' : '' ?>>
+            <button type="submit" name="carotte_click" class="btn btn-dark btn-lg mb-4" style="padding: 1.5rem 2.5rem;" <?= empty($selected_responsable) ? 'disabled' : '' ?>>
                 <img src="icones/<?= $carottes[$_SESSION['carotte_index']] ?>" alt="Carotte" style="height:320px;max-width:100%;">
-                <div>Changer de carotte !</div>
+                <div style="font-size:1.5rem;">Changer de carotte !</div>
             </button>
         </form>
     </div>
@@ -104,13 +106,12 @@ $darkmode = (!empty($_COOKIE['darkmode']) && $_COOKIE['darkmode'] === 'on');
         <ul class="list-group">
             <?php foreach ($leaderboard as $row): ?>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <?= htmlspecialchars($row['name']) ?>
-                    <span class="badge bg-warning text-dark"><?= $row['total'] ?></span>
+                    <?= htmlspecialchars($row['responsable']) ?>
+                    <span class="badge bg-warning text-dark"><?= $row['clicks'] ?></span>
                 </li>
             <?php endforeach; ?>
         </ul>
     </div>
-</div>
 </div>
 </body>
 </html>

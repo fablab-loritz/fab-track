@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 20 juin 2025 à 09:59
+-- Généré le : sam. 28 juin 2025 à 00:20
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `gestion`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `carotte_clicks`
+--
+
+DROP TABLE IF EXISTS `carotte_clicks`;
+CREATE TABLE IF NOT EXISTS `carotte_clicks` (
+  `responsable` varchar(100) NOT NULL,
+  `clicks` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`responsable`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `carotte_clicks`
+--
+
+INSERT INTO `carotte_clicks` (`responsable`, `clicks`) VALUES
+('Jeremy', 0),
+('Steven', 0),
+('Axel', 0);
 
 -- --------------------------------------------------------
 
@@ -167,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `enregistrements` (
   KEY `fk_professor` (`professor_id`),
   KEY `fk_class` (`class_id`),
   KEY `fk_responsible` (`responsible_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=415 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=416 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `enregistrements`
@@ -178,7 +200,8 @@ INSERT INTO `enregistrements` (`id`, `machine_id`, `modele_id`, `material_id`, `
 (412, 2, NULL, 34, '2025-06-18 12:30:28', 2, 4, 144, 18, 7, NULL, NULL),
 (413, 1, 1, 31, '2025-06-18 13:35:49', 1, NULL, 223, 20, 6, NULL, NULL),
 (411, 1, 1, 31, '2025-06-18 12:14:49', 8, NULL, 146, 7, 6, NULL, NULL),
-(410, 1, 2, 31, '2025-06-18 12:13:31', 10, NULL, 126, 7, 6, NULL, NULL);
+(410, 1, 2, 31, '2025-06-18 12:13:31', 10, NULL, 126, 7, 6, NULL, NULL),
+(415, 5, NULL, 39, '2025-06-26 08:17:35', 20, NULL, 54, 2, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -229,16 +252,16 @@ CREATE TABLE IF NOT EXISTS `materials` (
 --
 
 INSERT INTO `materials` (`id`, `name`, `material_type_id`, `unit`, `stock`, `image`) VALUES
-(30, 'Polystyrène extrudé', 3, 'mm', 100, 'polystyrene_extrude.png'),
+(30, 'Polystyrène extrudé', 3, 'm²', 100, 'polystyrene_extrude.png'),
 (31, 'PLA', 1, 'g', 100, 'pla.png'),
 (32, 'ABS', 1, 'g', 100, 'abs.png'),
 (33, 'PETG', 1, 'g', 100, 'petg.png'),
-(34, 'MDF', 2, 'mm', 100, 'mdf.png'),
-(35, 'Plexy', 2, 'mm', 100, 'plexy.png'),
-(36, 'Carton', 3, 'mm', 100, 'carton.png'),
-(37, 'Mousse', 3, 'mm', 100, 'mousse.png'),
-(38, 'Alu', 4, 'mm', 100, 'alu.png'),
-(39, 'Papier A4', 5, 'Papier', 100, 'papier_a4.png'),
+(34, 'MDF', 2, 'm²', 100, 'mdf.png'),
+(35, 'Plexy', 2, 'm²', 100, 'plexy.png'),
+(36, 'Carton', 3, 'm²', 100, 'carton.png'),
+(37, 'Mousse', 3, 'm²', 100, 'mousse.png'),
+(38, 'Alu', 4, 'm²', 100, 'alu.png'),
+(39, 'Papier A4', 5, 'Papier', 80, 'papier_a4.png'),
 (54, 'Papier A4 noir et blanc\r\n', 5, 'Papier', 100, 'papier_a4_noir_et_blanc.png'),
 (55, 'Papier A3\r\n', 5, 'Papier', 100, 'papier_a3.png'),
 (56, 'Papier A3 noir et blanc\r\n', 5, 'Papier', 100, 'papier_a4_noir_et_blanc.png'),
@@ -696,9 +719,9 @@ CREATE TABLE IF NOT EXISTS `responsibles` (
 --
 
 INSERT INTO `responsibles` (`id`, `name`, `total`) VALUES
-(6, '1\r\n', 3),
-(7, '2\r\n', 2),
-(8, '3', 0);
+(6, 'Jeremy', 30),
+(7, 'Steven', 166),
+(8, 'Axel', 12);
 
 -- --------------------------------------------------------
 
