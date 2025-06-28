@@ -48,19 +48,26 @@ $materials = $stmt->fetchAll();
     <?php
     $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
     ?>
-    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
-        <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-    </a>
-    <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
-    <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
-    <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
-    <span class="navbar-brand ms-auto">Gestion du Stock</span>
+<a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
+    <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+</a>
+<a href="admin.php" class="btn btn-outline-primary me-2">Admin</a>
+<a href="Fab-Track.php" class="btn btn-outline-primary me-2">FabTrack</a>
+<a href="ConsulterTableau.php" class="btn btn-outline-primary me-2">Consulter Tableau</a>
+    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">Gestion du stock
+    </span>
   </div>
 </nav>
-<div class="container">
+<div class="logo-fabtrack-float">
+    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 200px; width: auto;">
+    <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 200px; width: auto;">
+</div>
+
+<div class="d-flex justify-content-center">
+  <div style="max-width: 1100px; width: 100%;">
     <h4 class="mb-4 text-primary fw-bold text-center">Gestion du Stock</h4>
     <form method="post">
-        <table class="table table-bordered table-striped align-middle">
+        <table class="table table-bordered align-middle rounded bg-white" style="min-width:700px;"
             <thead>
                 <tr>
                     <th>Image</th>

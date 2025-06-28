@@ -18,9 +18,8 @@ $pdo = getPDO();
 <title>Fab-Track - Gestion</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="css/custom.css">
-<link rel="stylesheet" href="C:/Users/mat88/Downloads/virtualhost/css/custom.css" />
-</head>
 <link rel="icon" type="image/x-icon" href="icones/logo-fab-track.ico">
+</head>
 <body<?php
     $classes = [];
     if ($darkmode) $classes[] = 'dark-mode';
@@ -28,27 +27,27 @@ $pdo = getPDO();
 ?>>
 
 <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-  <div class="container-fluid d-flex align-items-center">
-    <?php
-      $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-    ?>
-    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
-        <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-    </a>
-    <a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
-    <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
-    <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
-    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">
-        Fab-Track
-        <div class="logo-fabtrack-float ms-2">
-            <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
-            <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
-        </div>
-    </span>
-  </div>
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <?php
+        $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
+      ?>
+      <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
+          <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+      </a>
+      <a href="ConsulterTableau.php" class="btn btn-outline-primary me-2">Consulter Tableau</a>
+      <a href="GestionStock.php" class="btn btn-outline-primary me-2">Gestion Stock</a>
+      <a href="admin.php" class="btn btn-outline-primary me-2">Admin</a>
+    </div>
+    <div class="d-flex align-items-center">
+      <span class="logo-fabtrack-navbar d-flex align-items-center me-2">
+        <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 70px; width: auto;">
+        <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 70px; width: auto;">
+      </span>
+      <span class="navbar-brand fw-bold d-flex align-items-center m-0">Fab-Track</span>
+    </div>
+   </div>
 </nav>
-
-<div class="container">
 
 <?php
 ob_start();

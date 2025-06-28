@@ -194,26 +194,29 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($classes) echo ' class="' . implode(' ', $classes) . '"';
 ?>>
 <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-  <div class="container-fluid align-items-center d-flex">
-    <?php
-      $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-    ?>
-    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
-        <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-    </a>
-    <a href="admin.php" class="btn btn-outline-secondary me-2">Admin</a>
-    <a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
-    <a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
-    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">
-        CONSULTATION
-        <div class="logo-fabtrack-float ms-4">
-            <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 100px; width: auto;">
-            <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 100px; width: auto;">
-        </div>
-    </span>
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <?php
+        $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
+      ?>
+      <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
+          <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+      </a>
+      <a href="ConsulterTableau.php" class="btn btn-outline-primary me-2">Consulter Tableau</a>
+      <a href="GestionStock.php" class="btn btn-outline-primary me-2">Gestion Stock</a>
+      <a href="admin.php" class="btn btn-outline-primary me-2">Admin</a>
+    </div>
+    <div class="d-flex align-items-center">
+      <span class="logo-fabtrack-navbar d-flex align-items-center me-2">
+        <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 70px; width: auto;">
+        <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 70px; width: auto;">
+      </span>
+      <span class="navbar-brand fw-bold d-flex align-items-center m-0">Fab-Track</span>
+    </div>
   </div>
 </nav>
 
+<span class="navbar-brand fw-bold">CONSULTATION</span>
     <!-- Le tableau en premier -->
     <form method="post" class="mb-4">
         <select name="machines" class="form-select w-auto d-inline-block" onchange="this.form.submit()">

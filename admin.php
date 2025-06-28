@@ -126,24 +126,26 @@ foreach ($materials as $mat) {
     if ($darkmode) $body_classes[] = 'dark-mode';
     if ($body_classes) echo ' class="' . implode(' ', $body_classes) . '"';
 ?>>
-    <div class="logo-fabtrack-float">
-        <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light">
-        <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark">
-    </div>
-        <nav class="navbar navbar-light bg-white shadow-sm mb-4">
-    <div class="container-fluid">
-<?php
-$toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
-?>
-<a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
-    <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
-</a>
-<a href="ConsulterTableau.php" class="btn btn-outline-secondary me-2">Consulter Tableau</a>
-<a href="Fab-Track.php" class="btn btn-outline-secondary me-2">FabTrack</a>
-<a href="GestionStock.php" class="btn btn-outline-secondary me-2">Gestion Stock</a>
-<span class="navbar-brand ms-auto">Administration</span>
-    </div>
-    </nav>
+
+<nav class="navbar navbar-light bg-white shadow-sm mb-4">
+  <div class="container-fluid align-items-center d-flex">
+    <?php
+      $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
+    ?>
+    <a href="<?= htmlspecialchars($toggleUrl) ?>" class="btn btn-outline-primary me-2">
+        <?= $darkmode ? 'Mode clair' : 'Mode sombre' ?>
+    </a>
+    <a href="ConsulterTableau.php" class="btn btn-outline-primary me-2">Consulter Tableau</a>
+    <a href="Fab-Track.php" class="btn btn-outline-primary me-2">FabTrack</a>
+    <a href="GestionStock.php" class="btn btn-outline-primary me-2">Gestion Stock</a>
+    <span class="navbar-brand ms-auto fw-bold d-flex align-items-center">Administration</span>
+    <a href="carotte.php" class="btn btn-dark ms-2">🥕 Carotte </a>
+  </div>
+</nav>
+<div class="logo-fabtrack-float mt-3 mb-4 d-flex justify-content-center">
+    <img src="icones/logo-fab-track.ico" alt="Logo Fab-Track" class="logo-light" style="height: 200px; width: auto;">
+    <img src="icones/logo-fab-track-Sombre.ico" alt="Logo Fab-Track sombre" class="logo-dark" style="height: 200px; width: auto;">
+</div>
     <div id="main-content">
         <div class="container py-4">
             <h1 class="mb-4 titre-entrees text-center">Administration : Ajout d'éléments</h1>
@@ -305,7 +307,7 @@ $toggleUrl = $_SERVER['PHP_SELF'] . '?darkmode=' . ($darkmode ? 'off' : 'on');
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button type="submit" name="delete_variante" class="btn btn-outline-danger">Supprimer</button>
+                            <button id="btn-supprimer-variante" type="submit" name="delete_variante" class="btn btn-outline-danger">Supprimer</button>
                         </form>
                     </div>
                 </div>

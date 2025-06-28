@@ -102,6 +102,9 @@ h1, h2, h3 {
     width: 100%;
     box-sizing: border-box;
     transition: background 0.2s, color 0.2s;
+    display: block;
+    width: 100% !important;
+    margin-bottom: 1rem;
 }
 .form-control:focus, .form-select:focus {
     border-color: #2CA1DB;
@@ -125,11 +128,25 @@ form.border.p-4.rounded.shadow-sm.bg-white {
     border-radius: 12px;
     padding: 2rem 2rem 1.5rem 2rem;
     margin-bottom: 2rem;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+/* Decalage Boutons */
+.admin-delete .btn {
+    margin-top: -1rem;
+}
+form.d-flex.align-items-end > #btn-supprimer-variante {
+    align-self: flex-start !important;
+    margin-top: 2.2rem !important;
+
+}
+form.row.g-2.align-items-end.mb-3 .btn-primary {
+    position: relative;
+    top: -1rem !important;
+    margin-top: 0 !important;
+}
 /* Textes colorés */
 .text-primary {
     color: #2CA1DB !important;
@@ -149,20 +166,24 @@ form.border.p-4.rounded.shadow-sm.bg-white {
 
 /* Tableau des responsables en haut à gauche */
 #table-responsables {
-    position: absolute;
-    top: 64px; /* adapte à la hauteur de la navbar */
-    left: 30px;
-    width: 300px;
-    max-height: 340px;
-    overflow-y: auto;
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    top: auto;
+    left: auto;
     background-color: white;
     border: 1.5px solid #2CA1DB;
     box-shadow: 0 2px 16px rgba(44,161,219,0.08);
     padding: 18px 14px 14px 14px;
     font-size: 0.95rem;
-    z-index: 1050;
     border-radius: 12px;
     transition: background 0.2s, color 0.2s;
+    z-index: auto;
+}
+
+.container {
+    margin-top: 0 !important;
 }
 #table-responsables table {
     font-size: 0.95rem;
@@ -172,6 +193,9 @@ form.border.p-4.rounded.shadow-sm.bg-white {
 /* Décalage du contenu principal pour ne pas être sous le tableau des responsables */
 .container {
     max-width: 900px;
+}
+#table-responsables {
+    margin-top: 20px;
 }
 
 /* Navbar */
@@ -408,8 +432,7 @@ body.dark-mode .alert-stock {
 .form-select {
     display: block;
     width: 100%;
-    max-width: 350px;
-    margin: 0 auto 1rem auto;
+    margin-bottom: 1rem;
 }
 
 /* Tableau arrondi pour consultation */
@@ -427,27 +450,58 @@ body.dark-mode .alert-stock {
 /* Logo fabtrack */
 .logo-fabtrack-float {
     position: absolute;
-    top: 64px; /* adapte à la hauteur de la navbar */
-    right: 0px;
-    left: auto;
-    z-index: 1000;
-    width:300px; /* adapte la taille du logo */
-    height: auto;
+    top: 60px;      
+    right: 40px;
+    width: 200px;
+    background: transparent;
     pointer-events: none;
 }
 .logo-fabtrack-float img {
     width: 100%;
     height: auto;
-    display: block;
-    margin: 0;
-    padding: 0;
 }
-.logo-fabtrack-float .logo-dark {
+
+/* Correction coins arrondis tableau en mode sombre */
+body.dark-mode .table,
+body.dark-mode .table-bordered,
+body.dark-mode .rounded-table {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background-color: #23272f !important;
+    box-shadow: 0 0 0 1px #444;
+}
+body.dark-mode .container,
+body.dark-mode .bg-white,
+body.dark-mode .table-responsive {
+    background-color: #23272f !important;
+}
+body.dark-mode .btn-outline-primary {
+    color: #DBA42C !important;
+    border-color: #DBA42C !important;
+    background-color: transparent !important;
+}
+body.dark-mode .btn-outline-primary:hover,
+body.dark-mode .btn-outline-primary:focus {
+    background-color: #DBA42C !important;
+    color: #23272f !important;
+    border-color: #DBA42C !important;
+}
+
+/* Logo Fabtrack : n'afficher qu'un logo à la fois */
+.logo-fabtrack-float .logo-light { display: block !important; }
+.logo-fabtrack-float .logo-dark { display: none !important; }
+body.dark-mode .logo-fabtrack-float .logo-light { display: none !important; }
+body.dark-mode .logo-fabtrack-float .logo-dark { display: block !important; }
+
+.logo-fabtrack-navbar img {
+    height: 40px;
+    width: auto;
+    margin-right: 0;
+    margin-left: 0;
     display: none;
 }
-body.dark-mode .logo-fabtrack-float .logo-light {
-    display: none;
-}
-body.dark-mode .logo-fabtrack-float .logo-dark {
-    display: block;
-}
+.logo-fabtrack-navbar .logo-light { display: inline-block; }
+.logo-fabtrack-navbar .logo-dark { display: none; }
+body.dark-mode .logo-fabtrack-navbar .logo-light { display: none; }
+body.dark-mode .logo-fabtrack-navbar .logo-dark { display: inline-block; }
+
