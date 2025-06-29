@@ -122,12 +122,25 @@ if (
         $_SESSION['palier_js_flash'] = $palier_reached;
     }
 
+    // Calcul du prochain palier et progression
+    $paliers = [100, 300, 500, 1000, 2000, 5000, 10000, 100000, 1000000];
+    $palier_suivant = 0;
+    foreach ($paliers as $palier) {
+        if ($combo_count < $palier) {
+            $palier_suivant = $palier;
+            break;
+        }
+    }
+    $progress = $palier_suivant ? min(100, round(($combo_count / $palier_suivant) * 100)) : 100;
+
     echo json_encode([
         'success' => true,
         'clicks' => $clicks,
         'carotte_index' => $_SESSION['carotte_index'],
         'combo_count' => $combo_count,
-        'palier_reached' => $palier_reached
+        'palier_reached' => $palier_reached,
+        'palier_suivant' => $palier_suivant,
+        'progress' => $progress
     ]);
     exit;
 }
@@ -328,11 +341,11 @@ if (isset($_SESSION['palier_js_flash'])) {
             </div>
             <?php if ($palier_suivant): ?>
                 <div class="progress my-3" style="height: 22px; width: 100%; max-width: 400px; margin-left:auto; margin-right:auto;">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $progress ?>%;" aria-valuenow="<?= $progress ?>" aria-valuemin="0" aria-valuemax="100">
+                    <div id="progress-bar" class="progress-bar bg-warning" role="progressbar" style="width: <?= $progress ?>%;" aria-valuenow="<?= $progress ?>" aria-valuemin="0" aria-valuemax="100">
                         <?= $progress ?>%
                     </div>
                 </div>
-                <div style="font-size:1rem; margin-bottom:1rem;">Prochain palier : <?= $palier_suivant ?></div>
+                <div id="palier-next-text" style="font-size:1rem; margin-bottom:1rem;">Prochain palier : <?= $palier_suivant ?></div>
             <?php endif; ?>
             <button type="submit" id="carotte-btn" name="carotte_click" class="carotte-btn" <?= empty($selected_responsable) ? 'disabled' : '' ?>>
                 <div id="carotte-counter" style="display:none;"><?= $leaderboard[0]['clicks'] ?? 0 ?></div>
@@ -406,6 +419,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var carotteImg = document.querySelector('.carotte-img');
     var carotteCounter = document.getElementById('carotte-counter');
     var comboBonus = document.getElementById('combo-bonus');
+    var progressBar = document.getElementById('progress-bar');
+    var palierNextText = document.getElementById('palier-next-text');
     var carottes = [
         "carotte1.png",
         "carotte2.png",
@@ -436,11 +451,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     carotteCounter.textContent = data.clicks;
                     carotteImg.src = 'icones/' + carottes[data.carotte_index];
                     comboBonus.textContent = data.combo_count;
+                    // MAJ barre de progression en direct
+                    if (progressBar && typeof data.progress !== "undefined") {
+                        progressBar.style.width = data.progress + "%";
+                        progressBar.setAttribute('aria-valuenow', data.progress);
+                        progressBar.textContent = data.progress + "%";
+                    }
+                    if (palierNextText && typeof data.palier_suivant !== "undefined") {
+                        palierNextText.textContent = "Prochain palier : " + data.palier_suivant;
+                    }
                     if (data.palier_reached) {
                         window.location.reload();
                     } else {
                         clearTimeout(reloadTimeout);
-                        reloadTimeout = setTimeout(() => window.location.reload(), 400);
+                        reloadTimeout = setTimeout(() => window.location.reload(), 3000);
                     }
                 }
             });
