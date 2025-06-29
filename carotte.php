@@ -35,6 +35,9 @@ $show_palier_btn = false;
 if (isset($_POST['show_palier_btn']) && $_POST['show_palier_btn'] === 'ezlevel') {
     $_SESSION['show_palier_btn'] = true;
 }
+if (isset($_POST['lock_palier_btn'])) {
+    unset($_SESSION['show_palier_btn']);
+}
 if (!empty($_SESSION['show_palier_btn'])) {
     $show_palier_btn = true;
 }
@@ -52,11 +55,11 @@ if (isset($_POST['goto_next_palier']) && !empty($selected_responsable) && $show_
     }
     if ($next !== null) {
         $to_add = $next - $current;
-        for ($i = 0; $i < $to_add; $i++) {
-            $stmt = $pdo->prepare("INSERT INTO carotte_clicks (responsable, clicks) VALUES (?, 1)
-                ON DUPLICATE KEY UPDATE clicks = clicks + 1");
-            $stmt->execute([$selected_responsable]);
-            $_SESSION['combo_count']++;
+        if ($to_add > 0) {
+            $stmt = $pdo->prepare("INSERT INTO carotte_clicks (responsable, clicks) VALUES (?, ?)
+                ON DUPLICATE KEY UPDATE clicks = clicks + VALUES(clicks)");
+            $stmt->execute([$selected_responsable, $to_add]);
+            $_SESSION['combo_count'] += $to_add;
         }
         $palier_sons = [
             100 => 'palier100',
@@ -75,8 +78,14 @@ if (isset($_POST['goto_next_palier']) && !empty($selected_responsable) && $show_
     }
 }
 
-// Gestion du clic sur la carotte
-if (isset($_POST['carotte_click']) && !empty($selected_responsable)) {
+// --- Gestion du clic sur la carotte en AJAX ---
+if (
+    isset($_POST['carotte_click_ajax'])
+    && !empty($_POST['responsable_id'])
+    && !empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+    && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
+) {
+    $selected_responsable = $_POST['responsable_id'];
     if (!isset($_SESSION['carotte_index'])) $_SESSION['carotte_index'] = 0;
     $_SESSION['carotte_index'] = ($_SESSION['carotte_index'] + 1) % count($carottes);
 
@@ -86,8 +95,43 @@ if (isset($_POST['carotte_click']) && !empty($selected_responsable)) {
     $stmt->execute([$selected_responsable]);
 
     // Incrémente le combo
+    if (!isset($_SESSION['combo_count'])) $_SESSION['combo_count'] = 0;
     $_SESSION['combo_count']++;
+
+    // Récupère le nouveau score
+    $stmt = $pdo->prepare("SELECT clicks FROM carotte_clicks WHERE responsable = ?");
+    $stmt->execute([$selected_responsable]);
+    $clicks = $stmt->fetchColumn();
+
+    // Vérifie si un palier est atteint
+    $palier_sons = [
+        100 => 'palier100',
+        300 => 'palier300',
+        500 => 'palier500',
+        1000 => 'palier1000',
+        2000 => 'palier2000',
+        5000 => 'palier5000',
+        10000 => 'palier10k',
+        100000 => 'palier100k',
+        1000000 => 'palier1M'
+    ];
+    $combo_count = $_SESSION['combo_count'];
+    $palier_reached = '';
+    if (array_key_exists($combo_count, $palier_sons)) {
+        $palier_reached = $palier_sons[$combo_count];
+        $_SESSION['palier_js_flash'] = $palier_reached;
+    }
+
+    echo json_encode([
+        'success' => true,
+        'clicks' => $clicks,
+        'carotte_index' => $_SESSION['carotte_index'],
+        'combo_count' => $combo_count,
+        'palier_reached' => $palier_reached
+    ]);
+    exit;
 }
+
 if (!isset($_SESSION['carotte_index'])) $_SESSION['carotte_index'] = 0;
 
 $combo_count = $_SESSION['combo_count'];
@@ -264,7 +308,7 @@ if (isset($_SESSION['palier_js_flash'])) {
     <div class="main-content-overlay d-flex flex-column align-items-center justify-content-center"
          style="min-width:220px;max-width:260px;flex-shrink:0;">
         <div class="display-6 mb-2" style="color:#ff9800;">Chomage Bonus</div>
-        <div class="fw-bold" style="font-size:2.5rem; color:#ff9800; text-shadow:0 2px 8px #fff7;"><?= $combo_count ?></div>
+        <div class="fw-bold" id="combo-bonus" style="font-size:2.5rem; color:#ff9800; text-shadow:0 2px 8px #fff7;"><?= $combo_count ?></div>
         <?= $combo_message ?>
     </div>
     <!-- Jeu au centre -->
@@ -290,8 +334,8 @@ if (isset($_SESSION['palier_js_flash'])) {
                 </div>
                 <div style="font-size:1rem; margin-bottom:1rem;">Prochain palier : <?= $palier_suivant ?></div>
             <?php endif; ?>
-            <button type="submit" name="carotte_click" class="carotte-btn" <?= empty($selected_responsable) ? 'disabled' : '' ?>>
-                <div id="carotte-counter"><?= $leaderboard[0]['clicks'] ?? 0 ?></div>
+            <button type="submit" id="carotte-btn" name="carotte_click" class="carotte-btn" <?= empty($selected_responsable) ? 'disabled' : '' ?>>
+                <div id="carotte-counter" style="display:none;"><?= $leaderboard[0]['clicks'] ?? 0 ?></div>
                 <img src="icones/<?= $carottes[$_SESSION['carotte_index']] ?>" class="carotte-img" alt="Carotte">
                 <div style="font-size:1.5rem;">Une Carotte ?</div>
             </button>
@@ -302,6 +346,7 @@ if (isset($_SESSION['palier_js_flash'])) {
                     <button type="submit" class="btn btn-secondary btn-sm" style="margin-top:-1rem;">Valider</button>
                 <?php else: ?>
                     <button type="submit" name="goto_next_palier" class="btn btn-danger btn-sm" style="margin-top:-1rem;">Aller au palier supérieur</button>
+                    <button type="submit" name="lock_palier_btn" class="btn btn-secondary btn-sm ms-2" style="margin-top:-1rem;">Verrouiller</button>
                 <?php endif; ?>
             </div>
         </form>
@@ -343,17 +388,6 @@ if (isset($_SESSION['palier_js_flash'])) {
 <audio id="palier1M" src="icones/palier1M.mp3"></audio>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Son au clic
-    const btn = document.querySelector('.carotte-btn');
-    if(btn) {
-        btn.addEventListener('click', function() {
-            const audio = document.getElementById('carotte-sound');
-            if(audio) {
-                audio.currentTime = 0;
-                audio.play();
-            }
-        });
-    }
     // Confettis et sons sur palier combo
     var palierSon = <?= json_encode($palier_js) ?>;
     if (palierSon) {
@@ -363,6 +397,54 @@ document.addEventListener('DOMContentLoaded', function() {
             palierAudio.currentTime = 0;
             palierAudio.play();
         }
+    }
+
+    // AJAX pour le clic carotte
+    var carotteBtn = document.getElementById('carotte-btn');
+    var carotteSound = document.getElementById('carotte-sound');
+    var responsableSelect = document.getElementById('responsable_id');
+    var carotteImg = document.querySelector('.carotte-img');
+    var carotteCounter = document.getElementById('carotte-counter');
+    var comboBonus = document.getElementById('combo-bonus');
+    var carottes = [
+        "carotte1.png",
+        "carotte2.png",
+        "carotte3.png",
+        "carotte4.png"
+    ];
+
+    let reloadTimeout;
+    if (carotteBtn && carotteSound && responsableSelect && carotteImg && carotteCounter && comboBonus) {
+        carotteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!responsableSelect.value) return;
+
+            carotteSound.currentTime = 0;
+            carotteSound.play();
+
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'carotte_click_ajax=1&responsable_id=' + encodeURIComponent(responsableSelect.value)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    carotteCounter.textContent = data.clicks;
+                    carotteImg.src = 'icones/' + carottes[data.carotte_index];
+                    comboBonus.textContent = data.combo_count;
+                    if (data.palier_reached) {
+                        window.location.reload();
+                    } else {
+                        clearTimeout(reloadTimeout);
+                        reloadTimeout = setTimeout(() => window.location.reload(), 400);
+                    }
+                }
+            });
+        });
     }
 });
 </script>
